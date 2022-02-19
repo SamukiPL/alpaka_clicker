@@ -12,10 +12,10 @@ class Player extends SpriteAnimationComponent with HasGameRef<ClickerGame> {
     final spriteSheet = SpriteSheet(image: await gameRef.images.load("papaj.png"), srcSize: Vector2(1400/7, 230));
     final dance = spriteSheet.createAnimation(row: 0, stepTime: 0.1);
     animation = dance;
-    height = 250;
-    width = 250;
+    height = gameRef.size.x;
+    width = gameRef.size.x;
     anchor = Anchor.center;
-    position = Vector2(gameRef.size.x / 2, gameRef.size.y / 2);
+    position = clickedPosition;
   }
 
   @override
