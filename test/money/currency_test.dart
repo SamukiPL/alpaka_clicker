@@ -1,4 +1,5 @@
 import 'package:alpaka_clicker/money/currency.dart';
+import 'package:alpaka_clicker/util/exceptions/cannot_subtract_exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../testUtils/expect_throw.dart';
@@ -17,6 +18,15 @@ main() {
   test("Wrong power in constructor causes error", () {
     try {
       Currency(value: 1, power: -1);
+      assert(false);
+    } on AssertionError {
+      assert(true);
+    }
+  });
+
+  test("Power is more than 0 when value is 0", () {
+    try {
+      Currency(value: 0, power: 2);
       assert(false);
     } on AssertionError {
       assert(true);
@@ -171,7 +181,7 @@ main() {
     const startPower = 3;
     Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
     Currency subtract = Currency(value: 1, power: startPower + 1, preccision: preccision);
-    expectThrow(() => currency -= subtract, ArgumentError);
+    expectThrow(() => currency -= subtract, CannotSubtractException);
     expect(currency.value, 1);
     expect(currency.power, startPower);
   });
@@ -183,5 +193,43 @@ main() {
     currency -= subtract;
     expect(currency.value, 0);
     expect(currency.power, 0);
+  });
+
+  test("Subtract idiotic value", () {
+    const startPower = 9223372036854775807;
+    Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
+    Currency subtract = Currency(value: 1, power: startPower - 1, preccision: preccision);
+    currency -= subtract;
+    expect(currency.value, 9);
+    expect(currency.power, startPower - 1);
+  });
+
+  test("Add idiotic value", () {
+    const startPower = 9223372036854775807;
+    Currency currency = Currency(value: 5, power: startPower, preccision: preccision);
+    Currency add = Currency(value: 5, power: startPower, preccision: preccision);
+    currency += add;
+    expect(currency.value, 1);
+    expect(currency.power < 0, true);
+  });
+
+  test("Add 1/60 for 61 frames", () {
+    Currency currency = Currency(value: 0, power: 0, preccision: preccision);
+    Currency add = Currency(value: 0.0166666666, power: 0, preccision: preccision);
+    for(int i = 0; i <= 60; i++) {
+      currency += add;
+    }
+    expect(currency.value > 1, true);
+    expect(currency.power, 0);
+  });
+
+  test("Add 1/60 for 601 frames", () {
+    Currency currency = Currency(value: 0, power: 0, preccision: preccision);
+    Currency add = Currency(value: 0.0166666666, power: 0, preccision: preccision);
+    for(int i = 0; i <= 600; i++) {
+      currency += add;
+    }
+    expect(currency.value > 1, true);
+    expect(currency.power, 1);
   });
 }

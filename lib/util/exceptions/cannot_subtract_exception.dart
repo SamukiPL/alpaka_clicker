@@ -1,0 +1,1 @@
+class CannotSubtractException implements Exception {}
