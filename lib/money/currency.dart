@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alpaka_clicker/util/exceptions/cannot_subtract_exception.dart';
 import 'package:alpaka_clicker/util/ext/double_ext.dart';
 
 class Currency {
@@ -7,7 +8,7 @@ class Currency {
   int power;
   final int preccision;
 
-  Currency({required this.value, required this.power, this.preccision = 12}): assert(value < 10), assert(power >= 0) {
+  Currency({required this.value, required this.power, this.preccision = 12}): assert(value < 10), assert(power >= 0), assert(!(value < 0 && power > 0)) {
     value = value.toPrecision(preccision);
   }
 
@@ -36,7 +37,7 @@ class Currency {
 
   Currency operator -(Currency currency) {
     if (this < currency) {
-      throw ArgumentError("Currency is too small to be subtracted by $currency");
+      throw CannotSubtractException();
     } else if (this == currency) {
       return Currency(value: 0, power: 0, preccision: preccision);
     }
