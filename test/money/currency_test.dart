@@ -14,6 +14,15 @@ main() {
     }
   });
 
+  test("Wrong power in constructor causes error", () {
+    try {
+      Currency(value: 1, power: -1);
+      assert(false);
+    } on AssertionError {
+      assert(true);
+    }
+  });
+
   test("Value is normalized to only 9 places after decimal", () {
     const value = 1.987654321123456789;
     const power = 12;
