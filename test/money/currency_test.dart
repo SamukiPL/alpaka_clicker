@@ -113,13 +113,31 @@ main() {
     expect(currency.power, startPower - 1);
   });
 
-  test("Subtract very big value", () {
+  test("Subtract very big value bigger than 9", () {
     const startPower = 9;
     Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
     Currency subtract = Currency(value: 9.99, power: startPower - 1, preccision: preccision);
     currency -= subtract;
     expect(currency.value, 1);
     expect(currency.power, startPower - 2);
+  });
+
+  test("Subtract very big value", () {
+    const startPower = 9;
+    Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
+    Currency subtract = Currency(value: 9, power: startPower - 1, preccision: preccision);
+    currency -= subtract;
+    expect(currency.value, 1);
+    expect(currency.power, startPower - 1);
+  });
+
+  test("Subtract very big value smaller than 9", () {
+    const startPower = 9;
+    Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
+    Currency subtract = Currency(value: 8.99, power: startPower - 1, preccision: preccision);
+    currency -= subtract;
+    expect(currency.value, 1.01);
+    expect(currency.power, startPower - 1);
   });
 
   test("Subtract bigger value", () {
