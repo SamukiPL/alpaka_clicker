@@ -7,7 +7,7 @@ class Currency {
   int power;
   final int preccision;
 
-  Currency({required this.value, required this.power, this.preccision = 12}): assert(value < 10) {
+  Currency({required this.value, required this.power, this.preccision = 12}): assert(value < 10), assert(power >= 0) {
     value = value.toPrecision(preccision);
   }
 
@@ -41,6 +41,9 @@ class Currency {
       return Currency(value: 0, power: 0, preccision: preccision);
     }
     final subtractedPower = power - currency.power;
+    if (subtractedPower > preccision) {
+      return Currency(value: 9.999999999999, power: power - 1, preccision: preccision);
+    }
     value = (value * pow(10, subtractedPower)) - currency.value;
     _normalizeSubtract(currency.value);
     return this;

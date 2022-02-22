@@ -140,6 +140,24 @@ main() {
     expect(currency.power, startPower - 1);
   });
 
+  test("Subtract very small value", () {
+    const startPower = 16;
+    Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
+    Currency subtract = Currency(value: 1, power: 4, preccision: preccision);
+    currency -= subtract;
+    expect(currency.value, 9.99999999999);
+    expect(currency.power, startPower - 1);
+  });
+
+  test("Subtract too small value", () {
+    const startPower = 16;
+    Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
+    Currency subtract = Currency(value: 1, power: 0, preccision: preccision);
+    currency -= subtract;
+    expect(currency.value, 9.999999999999);
+    expect(currency.power, startPower - 1);
+  });
+
   test("Subtract bigger value", () {
     const startPower = 3;
     Currency currency = Currency(value: 1, power: startPower, preccision: preccision);
