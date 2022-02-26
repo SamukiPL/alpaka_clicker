@@ -27,3 +27,5 @@
 .dart_tool/
 .packages
 build/
+*.config.dart
+*.g.dart
