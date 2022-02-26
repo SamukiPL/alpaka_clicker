@@ -1,7 +1,6 @@
 import 'package:alpaka_clicker/money/bank.dart';
 import 'package:alpaka_clicker/money/currency.dart';
 import 'package:alpaka_clicker/money/spend_money_state.dart';
-import 'package:alpaka_clicker/util/monad/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -31,7 +30,8 @@ void main() {
 
   test("Bank returns interest passed by constructor", () {
     final interest = Currency(value: 1.4, power: 4);
-    final bank = Bank(Currency(value: 0.0, power: 0), interest);
+    final bank =
+        Bank(Currency(value: 0.0, power: 0), emptyCurrency(), interest);
     final returnedInterest = bank.getInterest();
     expect(returnedInterest, interest);
   });
@@ -57,7 +57,7 @@ void main() {
     final interest = Currency(value: 0.0166666666, power: 0);
     final bank = emptyBank();
     bank.raiseInterest(interest);
-    for(int i = 0; i <= 60; i++) {
+    for (int i = 0; i <= 60; i++) {
       bank.payInterest();
     }
     final storedValue = bank.getMoney();
@@ -69,7 +69,7 @@ void main() {
     final price = Currency(value: 5, power: 1);
     final bank = bankWithMoney(1.0, 2);
     final result = bank.spendMoney(price);
-    expect(result , SpendMoneyState.success);
+    expect(result, SpendMoneyState.success);
     final storedValue = bank.getMoney();
     expect(storedValue.value, 5);
     expect(storedValue.power, 1);
@@ -79,13 +79,88 @@ void main() {
     final price = Currency(value: 5, power: 2);
     final bank = bankWithMoney(1.0, 2);
     final result = bank.spendMoney(price);
-    expect(result , SpendMoneyState.priceIsTooBig);
+    expect(result, SpendMoneyState.priceIsTooBig);
     final storedValue = bank.getMoney();
     expect(storedValue.value, 1);
     expect(storedValue.power, 2);
   });
+
+  test("Bank returns salary", () {
+    final salary = Currency(value: 5, power: 2);
+    final bank = Bank(emptyCurrency(), salary, emptyCurrency());
+    expect(bank.getSalary(), salary);
+  });
+
+  test("Bank accepts salary raise", () {
+    final salary = Currency(value: 5, power: 2);
+    final bank = emptyBank();
+    bank.raiseSalary(salary);
+    expect(bank.getSalary(), salary);
+  });
+
+  test("Bank accepts salary raise", () {
+    const salaryValue = 1.5;
+    const salaryPower = 1;
+    final bank = bankWithSalary(salaryValue, salaryPower);
+    bank.paySalary();
+    expect(bank.getMoney().value, salaryValue);
+    expect(bank.getMoney().power, salaryPower);
+  });
+
+  test("Full bank functionalities", () {
+    final bank = emptyBank();
+
+    expect(bank.getMoney(), emptyCurrency());
+    expect(bank.getSalary(), emptyCurrency());
+    expect(bank.getInterest(), emptyCurrency());
+
+    final moneyToDeposit = currency(0.13, 4);
+    final salaryRise = currency(2, 4);
+    final interestRise = currency(7, 1);
+
+    bank.depositMoney(moneyToDeposit);
+    expect(bank.getMoney(), moneyToDeposit);
+
+    bank.raiseSalary(salaryRise);
+    expect(bank.getSalary(), salaryRise);
+
+    bank.raiseInterest(interestRise);
+    expect(bank.getInterest(), interestRise);
+
+    bank.paySalary();
+    expect(bank.getMoney(), currency(0.13, 4) + currency(2, 4));
+
+    bank.payInterest();
+    final allCurrenciesCombined = moneyToDeposit + salaryRise + interestRise;
+    expect(bank.getMoney().value, allCurrenciesCombined.value);
+    expect(bank.getMoney().power, allCurrenciesCombined.power);
+
+    final creamPiePrice = currency(2.137, 4);
+    final firstResult = bank.spendMoney(creamPiePrice);
+    expect(firstResult, SpendMoneyState.success);
+    expect(bank.getMoney(), emptyCurrency());
+
+    final secondResult = bank.spendMoney(creamPiePrice);
+    expect(secondResult, SpendMoneyState.priceIsTooBig);
+
+    expect(bank.getMoney(), emptyCurrency());
+    expect(bank.getSalary(), salaryRise);
+    expect(bank.getInterest(), interestRise);
+  });
 }
 
-Bank emptyBank() => Bank(Currency(value: 0.0, power: 0), Currency(value: 0.0, power: 0));
-Bank bankWithMoney(double value, int power) => Bank(Currency(value: value, power: power), Currency(value: 0.0, power: 0));
-Bank bankWithInterest(double value, int power) => Bank(Currency(value: 0.0, power: 0), Currency(value: value, power: power));
+Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
+
+Bank bankWithMoney(double value, int power) =>
+    Bank(currency(value, power), emptyCurrency(), emptyCurrency());
+
+Bank bankWithInterest(double value, int power) =>
+    Bank(emptyCurrency(), emptyCurrency(), currency(value, power));
+
+Bank bankWithSalary(double value, int power) =>
+    Bank(emptyCurrency(), currency(value, power), emptyCurrency());
+
+Currency emptyCurrency() => Currency(value: 0.0, power: 0);
+
+Currency currency(double value, int power) =>
+    Currency(value: value, power: power);

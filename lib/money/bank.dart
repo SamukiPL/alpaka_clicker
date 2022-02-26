@@ -5,9 +5,10 @@ import 'package:alpaka_clicker/util/monad/result.dart';
 
 class Bank {
   Currency _depositedMoney;
+  Currency _currentSalary;
   Currency _currentInterest;
 
-  Bank(this._depositedMoney, this._currentInterest);
+  Bank(this._depositedMoney, this._currentSalary, this._currentInterest);
 
   Currency getMoney() => _depositedMoney;
 
@@ -22,6 +23,16 @@ class Bank {
     } on CannotSubtractException {
       return SpendMoneyState.priceIsTooBig;
     }
+  }
+
+  Currency getSalary() => _currentSalary;
+
+  void raiseSalary(Currency salary) {
+    _currentSalary += salary;
+  }
+
+  void paySalary() {
+    _depositedMoney += _currentSalary;
   }
 
   Currency getInterest() => _currentInterest;
