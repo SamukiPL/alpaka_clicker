@@ -1,14 +1,12 @@
 import 'dart:math';
 
-import 'package:alpaka_clicker/money/bank.dart';
 import 'package:alpaka_clicker/screens/game/clicker_game.dart';
 import 'package:flame/components.dart';
 
 class MoneyParticle extends SpriteComponent with HasGameRef<ClickerGame> {
   final Vector2 startPosition;
-  final Bank bank;
 
-  MoneyParticle(this.startPosition, this.bank);
+  MoneyParticle(this.startPosition);
 
   @override
   Future<void>? onLoad() async {
