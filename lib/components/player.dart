@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 
 class Player extends SpriteAnimationComponent with HasGameRef<ClickerGame> {
-  late Vector2 clickedPosition = Vector2(gameRef.size.x / 2, gameRef.size.y / 2);
 
   @override
   Future<void>? onLoad() async {
@@ -13,8 +12,9 @@ class Player extends SpriteAnimationComponent with HasGameRef<ClickerGame> {
     animation = dance;
     height = gameRef.size.x;
     width = gameRef.size.x;
-    anchor = Anchor.center;
-    position = clickedPosition;
+    anchor = Anchor.bottomCenter;
+    x = gameRef.size.x / 2;
+    y = gameRef.size.y - 70;
     super.onLoad();
   }
 }
