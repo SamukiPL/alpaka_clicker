@@ -11,11 +11,19 @@ dependencies:
   flutter:
     sdk: flutter
   flame: 1.0.0
+  get_it: ^7.2.0
+  injectable: ^1.5.3
+  mobx: ^2.0.6+1
+  flutter_mobx: ^2.0.4
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.7
+  mobx_codegen: ^2.0.5+2
+  injectable_generator: ^1.5.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -26,16 +34,5 @@ flutter:
   # The 'pluginClass' and Android 'package' identifiers should not ordinarily
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
-  plugin:
-    platforms:
-      android:
-        package: com.alpakastudio.alpaka_clicker
-        pluginClass: AlpakaClickerPlugin
-      ios:
-        pluginClass: AlpakaClickerPlugin
-      windows:
-        pluginClass: AlpakaClickerPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
-  assets:
-    - assets/images/papaj.png

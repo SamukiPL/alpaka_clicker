@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/alpaka_clicker_widget.dart';
+import 'package:alpaka_clicker/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const AlpakaClickerWidget();
+    return MaterialApp(
+        color: Colors.greenAccent, home: SplashScreen());
   }
 }

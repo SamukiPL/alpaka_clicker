@@ -1,8 +1,7 @@
 
-import 'package:alpaka_clicker/clicker_game.dart';
+import 'package:alpaka_clicker/screens/game/clicker_game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:flutter/material.dart';
 
 class Player extends SpriteAnimationComponent with HasGameRef<ClickerGame> {
   late Vector2 clickedPosition = Vector2(gameRef.size.x / 2, gameRef.size.y / 2);
@@ -16,17 +15,6 @@ class Player extends SpriteAnimationComponent with HasGameRef<ClickerGame> {
     width = gameRef.size.x;
     anchor = Anchor.center;
     position = clickedPosition;
-  }
-
-  @override
-  void update(double dt) {
-    y += (y > clickedPosition.y.floor())? -1.0 : 1.0;
-    x += (x > clickedPosition.x.floor())? -1.0 : 1.0;
-
-    super.update(dt);
-  }
-
-  void move(Vector2 delta) {
-    clickedPosition = delta;
+    super.onLoad();
   }
 }
