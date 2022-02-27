@@ -1,6 +1,5 @@
-import 'package:alpaka_clicker/components/money_counter.dart';
+import 'package:alpaka_clicker/components/background.dart';
 import 'package:alpaka_clicker/components/money_particle.dart';
-import 'package:alpaka_clicker/components/player.dart';
 import 'package:alpaka_clicker/screens/game/clicker_game_controller.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -14,8 +13,7 @@ class ClickerGame extends FlameGame with TapDetector, PanDetector {
 
   @override
   Future<void> onLoad() async {
-    add(Player());
-    add(MoneyCounter());
+    add(Background());
     super.onLoad();
   }
 
