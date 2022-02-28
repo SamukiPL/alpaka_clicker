@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/components/money_counter.dart';
+import 'package:alpaka_clicker/components/money_counter/money_counter.dart';
 import 'package:alpaka_clicker/components/player.dart';
 import 'package:alpaka_clicker/screens/game/clicker_game.dart';
 import 'package:flame/components.dart';
