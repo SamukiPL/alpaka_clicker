@@ -11,8 +11,8 @@ class MoneyParticle extends SpriteComponent with HasGameRef<ClickerGame> {
   @override
   Future<void>? onLoad() async {
     sprite = Sprite(await gameRef.images.load("putin.png"));
-    height = 50;
-    width = 50;
+    height = 25;
+    width = 25;
     position = startPosition;
     anchor = Anchor.center;
     super.onLoad();
