@@ -14,7 +14,7 @@ class Player extends SpriteAnimationComponent with HasGameRef<ClickerGame> {
     width = (gameRef.size.x) * 1.2;
     anchor = Anchor.bottomCenter;
     x = gameRef.size.x / 2;
-    y = gameRef.size.y - 70;
+    y = gameRef.size.y;
     super.onLoad();
   }
 }

@@ -39,11 +39,11 @@ class NavigationBarWidget extends StatelessWidget {
   Widget buildImage(String path, Function navigationEvent) => GestureDetector(
     onTap: () => navigationEvent(),
     child: Image.asset(path,
-        height: 60, width: 60, fit: BoxFit.fill, color: const Color(0xff4d3513)),
+        height: 40, width: 40, fit: BoxFit.fill, color: const Color(0xFFD5A800)),
   );
 
   Widget getDivider() => const VerticalDivider(
-        color: Color(0x60171717),
+        color: Color(0xFFD5A800),
         thickness: 0.8,
         indent: 20,
         endIndent: 20,
