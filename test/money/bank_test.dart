@@ -147,6 +147,20 @@ void main() {
     expect(bank.getSalary(), salaryRise);
     expect(bank.getInterest(), interestRise);
   });
+
+  test("Change interest in bank", () {
+    const initialValue = 2.0;
+    const initialPower = 3;
+    final bank = bankWithInterest(initialValue, initialPower);
+
+    const newValue = 1.0;
+    const newPower = 7;
+    final newCurrency = currency(newValue, newPower);
+
+    bank.changeInterest(newCurrency);
+    expect(bank.getInterest().value, newValue);
+    expect(bank.getInterest().power, newPower);
+  });
 }
 
 Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
