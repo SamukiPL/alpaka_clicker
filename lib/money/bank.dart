@@ -1,6 +1,6 @@
 import 'package:alpaka_clicker/money/currency.dart';
 import 'package:alpaka_clicker/money/spend_money_state.dart';
-import 'package:alpaka_clicker/util/exceptions/cannot_subtract_exception.dart';
+import 'package:alpaka_clicker/util/exceptions/currency_exceptions.dart';
 
 class Bank {
   Currency _depositedMoney;

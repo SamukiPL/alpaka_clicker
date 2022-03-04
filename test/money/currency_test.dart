@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:alpaka_clicker/money/currency.dart';
-import 'package:alpaka_clicker/util/exceptions/cannot_subtract_exception.dart';
+import 'package:alpaka_clicker/util/exceptions/currency_exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../testUtils/expect_throw.dart';
@@ -231,5 +233,86 @@ main() {
     }
     expect(currency.value > 1, true);
     expect(currency.power, 1);
+  });
+
+  test("Multiply by 2", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 2;
+    currency *= multiplier;
+    expect(currency.value, initialValue * multiplier);
+    expect(currency.power, initialPower);
+  });
+
+  test("Multiply by 10", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 10;
+    currency *= multiplier;
+    expect(currency.value, initialValue);
+    expect(currency.power, initialPower + 1);
+  });
+
+  test("Multiply by 1000", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    int multiplierPower = 3;
+    double multiplier = pow(10, multiplierPower).toDouble();
+    currency *= multiplier;
+    expect(currency.value, initialValue);
+    expect(currency.power, initialPower + multiplierPower);
+  });
+
+  test("Multiply by 2 when initial value is 5", () {
+    double initialValue = 5;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 2;
+    currency *= multiplier;
+    expect(currency.value, 1);
+    expect(currency.power, initialPower + 1);
+  });
+
+  test("Multiply by 1.5 when initial value is 1", () {
+    double initialValue = 5;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 1.5;
+    currency *= multiplier;
+    expect(currency.value, initialValue * multiplier);
+    expect(currency.power, initialPower);
+  });
+
+  test("Multiply by 1500 when initial value is 1", () {
+    double initialValue = 5;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    int multiplierPower = 3;
+    double multiplier = 1.5 * pow(10, multiplierPower).toDouble();
+    currency *= multiplier;
+    expect(currency.value, 7.5);
+    expect(currency.power, initialPower + multiplierPower);
+  });
+
+  test("Multiply by weird number when initial value is weird number", () {
+    double initialValue = 2.137;
+    int initialPower = 3;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    int multiplierPower = 4;
+    double multiplier = 9.857 * pow(10, multiplierPower).toDouble();
+    currency *= multiplier;
+    expect(currency.value, 2.1064409);
+    expect(currency.power, initialPower + multiplierPower + 1);
+  });
+
+  test("Multiply by less than 1", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 0.1;
+    expectThrow(() => currency *= multiplier, CannotMultiplyException);
   });
 }
