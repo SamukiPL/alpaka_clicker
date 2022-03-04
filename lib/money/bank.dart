@@ -43,4 +43,8 @@ class Bank {
   void payInterest() {
     _depositedMoney += _currentInterest;
   }
+
+  void changeInterest(Currency interest) {
+    _currentInterest = interest;
+  }
 }
