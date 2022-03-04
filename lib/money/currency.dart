@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:alpaka_clicker/util/exceptions/cannot_subtract_exception.dart';
+import 'package:alpaka_clicker/util/exceptions/currency_exceptions.dart';
 import 'package:alpaka_clicker/util/ext/double_ext.dart';
 
 class Currency {
@@ -22,11 +22,11 @@ class Currency {
     } else {
       value += currency.value * pow(10, powerDifference);
     }
-    _normalizeAdd();
+    _normalizeIncrease();
     return this;
   }
 
-  void _normalizeAdd() {
+  void _normalizeIncrease() {
     final length = value.toString().split(".")[0].length - 1;
     value = value.toPrecision(preccision);
     if (length > 0) {
@@ -61,6 +61,15 @@ class Currency {
       power -= length;
     }
     value = value.toPrecision(preccision);
+  }
+
+  Currency operator *(double multiplier) {
+    if (multiplier < 1) {
+      throw CannotMultiplyException();
+    }
+    value *= multiplier;
+    _normalizeIncrease();
+    return this;
   }
 
   @override
