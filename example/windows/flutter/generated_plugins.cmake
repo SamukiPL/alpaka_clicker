@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  alpaka_clicker
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
