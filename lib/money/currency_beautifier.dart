@@ -13,7 +13,6 @@ class CurrencyBeautifier {
   final int _placesAfterPoint = 3;
   final int _numberSystemBase = 27;
   final int _charBase = 64;
-  final int _suffixPad = 1;
 
   String beautifyCurrency(Currency currency) {
     final value = currency.value;
@@ -52,6 +51,6 @@ class CurrencyBeautifier {
       suffixPower ~/= _numberSystemBase;
     }
 
-    return suffix.padLeft(_suffixPad);
+    return suffix.padLeft(suffix.length + 1);
   }
 }
