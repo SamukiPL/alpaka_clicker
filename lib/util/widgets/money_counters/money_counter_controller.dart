@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:alpaka_clicker/money/bank.dart';
+import 'package:alpaka_clicker/money/domain/get_displayable_money_use_case.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -10,9 +10,9 @@ part 'money_counter_controller.g.dart';
 class MoneyCounterController = MoneyCounterControllerBase with _$MoneyCounterController;
 
 abstract class MoneyCounterControllerBase with Store {
-  final Bank _bank;
+  final GetDisplayableMoneyUseCase _displayableMoneyUseCase;
 
-  MoneyCounterControllerBase(this._bank);
+  MoneyCounterControllerBase(this._displayableMoneyUseCase);
 
   late Timer _moneyUpdater;
 
@@ -27,7 +27,9 @@ abstract class MoneyCounterControllerBase with Store {
 
   @action
   Future<void> _updateMoney() async {
-    actualMoney = (_bank.getMoney().value * 100).toStringAsPrecision(6) + " AA";
+    _displayableMoneyUseCase()
+        .onSuccess((money) => actualMoney = money)
+        .onFailure((exception) => actualMoney = ":(");
   }
 
   void dispose() {

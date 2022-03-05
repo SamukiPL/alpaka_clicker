@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 @module
 abstract class MainModule {
 
+  @singleton
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 }
