@@ -1,4 +1,5 @@
 class CannotSubtractException implements Exception {}
+
 class CannotMultiplyException implements Exception {
   @override
   String toString() {

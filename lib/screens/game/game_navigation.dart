@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class GameNavigation implements NavigationBarListener {
-
   @override
   void clothingClicked(BuildContext context) {
     // TODO: implement clothingClicked
@@ -19,15 +18,11 @@ class GameNavigation implements NavigationBarListener {
 
   @override
   void shopClicked(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (_) => PropertyShopScreen()
-    ));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => PropertyShopScreen()));
   }
 
   @override
   void upgradesClicked(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-        builder: (_) => throw UnimplementedError()
-    ));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => throw UnimplementedError()));
   }
 }

@@ -5,8 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class MoneyCounter extends StatelessWidget {
-  late final MoneyCounterController _controller =
-      GetIt.instance.get<MoneyCounterController>();
+  late final MoneyCounterController _controller = GetIt.instance.get<MoneyCounterController>();
 
   final TextStyle textStyle;
 
@@ -22,26 +21,25 @@ class MoneyCounter extends StatelessWidget {
   Widget build(BuildContext context) {
     _controller.initializeMoneyUpdate();
     return DisposableWidget(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(right: 4),
-            child: Observer(
-              builder: (_) => Text(
-                _controller.actualMoney,
-                style: textStyle,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(right: 4),
+              child: Observer(
+                builder: (_) => Text(
+                  _controller.actualMoney,
+                  style: textStyle,
+                ),
               ),
             ),
-          ),
-          Image.asset(
-            "assets/images/kremowka.png",
-            height: 24,
-            width: 24,
-          )
-        ],
-      ),
-      dispose: () => _controller.dispose()
-    );
+            Image.asset(
+              "assets/images/kremowka.png",
+              height: 24,
+              width: 24,
+            )
+          ],
+        ),
+        dispose: () => _controller.dispose());
   }
 }

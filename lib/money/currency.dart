@@ -8,7 +8,10 @@ class Currency {
   int power;
   final int preccision;
 
-  Currency({required this.value, required this.power, this.preccision = 12}): assert(value < 10), assert(power >= 0), assert(!(value < 0 && power > 0)) {
+  Currency({required this.value, required this.power, this.preccision = 12})
+      : assert(value < 10),
+        assert(power >= 0),
+        assert(!(value < 0 && power > 0)) {
     value = value.toPrecision(preccision);
   }
 
@@ -74,12 +77,15 @@ class Currency {
 
   @override
   bool operator ==(Object other) => other is Currency && power == other.power && value == other.value;
+
   bool operator >(Currency currency) => power > currency.power || power == currency.power && value > currency.value;
+
   bool operator >=(Currency currency) => this == currency || this > currency;
+
   bool operator <(Currency currency) => power < currency.power || power == currency.power && value < currency.value;
+
   bool operator <=(Currency currency) => this == currency || this < currency;
 
   @override
   int get hashCode => Object.hashAll([power, value]);
-
 }

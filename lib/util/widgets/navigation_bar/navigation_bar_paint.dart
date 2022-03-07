@@ -16,16 +16,13 @@ class NavigationBarPaint extends CustomPainter {
       ..style = PaintingStyle.fill;
     Paint border = Paint()
       ..shader = ui.Gradient.linear(
-          Offset(size.width, 0),
-          Offset(size.width, 40),
-          [const Color(0xFFD5A800), const Color(0xFFF1D000)])
+          Offset(size.width, 0), Offset(size.width, 40), [const Color(0xFFD5A800), const Color(0xFFF1D000)])
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
     Path path = Path();
     path.moveTo(0, size.height * 0.1); // Start
-    path.quadraticBezierTo(
-        size.width * 0.25, size.height * -0.4, size.width * 0.485, size.height * 0.1);
+    path.quadraticBezierTo(size.width * 0.25, size.height * -0.4, size.width * 0.485, size.height * 0.1);
     //cross
     path.lineTo(size.width * 0.485, -30);
     path.lineTo(size.width * 0.44, -30);
@@ -38,8 +35,7 @@ class NavigationBarPaint extends CustomPainter {
     path.lineTo(size.width * 0.56, -30);
     path.lineTo(size.width * 0.515, -30);
     path.lineTo(size.width * 0.515, size.height * 0.1);
-    path.quadraticBezierTo(
-        size.width * 0.75, size.height * -0.4, size.width, size.height * 0.1);
+    path.quadraticBezierTo(size.width * 0.75, size.height * -0.4, size.width, size.height * 0.1);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.lineTo(0, 20);

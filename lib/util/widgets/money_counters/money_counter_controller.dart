@@ -26,8 +26,7 @@ abstract class MoneyCounterControllerBase with Store {
   @action
   Future<void> _startUpdatingMoney() async {
     _moneyDisplaySubscription = _displayableMoneyUseCase().listen((result) {
-      result.onSuccess((money) => actualMoney = money)
-          .onFailure((exception) => actualMoney = ":(");
+      result.onSuccess((money) => actualMoney = money).onFailure((exception) => actualMoney = ":(");
     });
   }
 
