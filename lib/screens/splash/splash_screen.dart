@@ -19,5 +19,4 @@ class SplashScreen extends StatelessWidget {
     _controller.loadDependencies();
     return Container();
   }
-
 }

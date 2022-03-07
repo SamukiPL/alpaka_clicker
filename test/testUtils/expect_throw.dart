@@ -11,3 +11,15 @@ void expectThrow(Function testBlock, Type errorType) {
     assert(didThrow);
   }
 }
+
+Future<void> expectAsyncThrow(Future Function() testBlock, Type errorType) async {
+  bool didThrow = true;
+  try {
+    await testBlock();
+    didThrow = false;
+  } catch(error) {
+    expect(error.runtimeType, errorType);
+  } finally {
+    assert(didThrow);
+  }
+}

@@ -12,7 +12,6 @@ PreferredSize MoneyCounterToolbar() {
 }
 
 class _MoneyCounterToolbar extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(

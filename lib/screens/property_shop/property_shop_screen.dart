@@ -17,9 +17,7 @@ class PropertyShopScreen extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Observer(
-            builder: (_) => Text(
-              _controller.actualMoney
-            ),
+            builder: (_) => Text(_controller.actualMoney),
           ),
         ),
       ),
@@ -28,5 +26,4 @@ class PropertyShopScreen extends StatelessWidget {
       },
     );
   }
-
 }

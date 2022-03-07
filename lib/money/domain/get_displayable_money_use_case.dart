@@ -8,5 +8,5 @@ class GetDisplayableMoneyUseCase {
 
   GetDisplayableMoneyUseCase(this._moneyRepository);
 
-  Result<String> call() => _moneyRepository.getDisplayableMoney();
+  Stream<Result<String>> call() => _moneyRepository.getDisplayableMoney();
 }

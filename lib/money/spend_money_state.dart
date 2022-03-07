@@ -1,3 +1,1 @@
-enum SpendMoneyState {
-  success, priceIsTooBig
-}
+enum SpendMoneyState { success, priceIsTooBig }

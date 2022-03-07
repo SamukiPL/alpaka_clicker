@@ -10,9 +10,7 @@ class MainScreenMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        FloatingMoneyCounter(
-            top: 16,
-            left: 16),
+        FloatingMoneyCounter(top: 16, left: 16),
         PositionedButton(
             bottom: 16 + 32 + 16 + 16,
             left: 16,
@@ -69,5 +67,4 @@ class MainScreenMenu extends StatelessWidget {
       ],
     );
   }
-
 }

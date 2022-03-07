@@ -14,25 +14,23 @@ abstract class MoneyCounterControllerBase with Store {
 
   MoneyCounterControllerBase(this._displayableMoneyUseCase);
 
-  late Timer _moneyUpdater;
+  late StreamSubscription _moneyDisplaySubscription;
 
   void initializeMoneyUpdate() {
-    _moneyUpdater = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      _updateMoney();
-    });
+    _startUpdatingMoney();
   }
 
   @observable
   String actualMoney = "";
 
   @action
-  Future<void> _updateMoney() async {
-    _displayableMoneyUseCase()
-        .onSuccess((money) => actualMoney = money)
-        .onFailure((exception) => actualMoney = ":(");
+  Future<void> _startUpdatingMoney() async {
+    _moneyDisplaySubscription = _displayableMoneyUseCase().listen((result) {
+      result.onSuccess((money) => actualMoney = money).onFailure((exception) => actualMoney = ":(");
+    });
   }
 
   void dispose() {
-    _moneyUpdater.cancel();
+    _moneyDisplaySubscription.cancel();
   }
 }
