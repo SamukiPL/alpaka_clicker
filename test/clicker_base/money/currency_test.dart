@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/util/exceptions/currency_exceptions.dart';
+import 'package:alpaka_clicker/util/ext/double_ext.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../testUtils/expect_throw.dart';
@@ -210,9 +211,9 @@ main() {
     const startPower = 9223372036854775807;
     Currency currency = Currency(value: 5, power: startPower, preccision: preccision);
     Currency add = Currency(value: 5, power: startPower, preccision: preccision);
-    currency += add;
-    expect(currency.value, 1);
-    expect(currency.power < 0, true);
+    expectAssert(() {
+      currency += add;
+    });
   });
 
   test("Add 1/60 for 61 frames", () {
@@ -239,30 +240,35 @@ main() {
     double initialValue = 1;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
-    double multiplier = 2;
+    double multiplierValue = 2;
+    int multiplierPower = 0;
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
-    expect(currency.value, initialValue * multiplier);
-    expect(currency.power, initialPower);
+    expect(currency.value, initialValue * multiplierValue);
+    expect(currency.power, initialPower + multiplierPower);
   });
 
   test("Multiply by 10", () {
     double initialValue = 1;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
-    double multiplier = 10;
+    double multiplierValue = 1;
+    int multiplierPower = 1;
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
-    expect(currency.value, initialValue);
-    expect(currency.power, initialPower + 1);
+    expect(currency.value, initialValue * multiplierValue);
+    expect(currency.power, initialPower + multiplierPower);
   });
 
   test("Multiply by 1000", () {
     double initialValue = 1;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplierValue = 1;
     int multiplierPower = 3;
-    double multiplier = pow(10, multiplierPower).toDouble();
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
-    expect(currency.value, initialValue);
+    expect(currency.value, initialValue * multiplierValue);
     expect(currency.power, initialPower + multiplierPower);
   });
 
@@ -270,30 +276,35 @@ main() {
     double initialValue = 5;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
-    double multiplier = 2;
+    double multiplierValue = 2;
+    int multiplierPower = 0;
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
-    expect(currency.value, 1);
-    expect(currency.power, initialPower + 1);
+    expect(currency.value, (initialValue * multiplierValue).trimToOnePlaceBeforePoint());
+    expect(currency.power, initialPower + multiplierPower + 1);
   });
 
   test("Multiply by 1.5 when initial value is 1", () {
-    double initialValue = 5;
+    double initialValue = 1;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
-    double multiplier = 1.5;
+    double multiplierValue = 1.5;
+    int multiplierPower = 0;
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
-    expect(currency.value, initialValue * multiplier);
-    expect(currency.power, initialPower);
+    expect(currency.value, initialValue * multiplierValue);
+    expect(currency.power, initialPower + multiplierPower);
   });
 
   test("Multiply by 1500 when initial value is 1", () {
-    double initialValue = 5;
+    double initialValue = 1;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplierValue = 1.5;
     int multiplierPower = 3;
-    double multiplier = 1.5 * pow(10, multiplierPower).toDouble();
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
-    expect(currency.value, 7.5);
+    expect(currency.value, initialValue * multiplierValue);
     expect(currency.power, initialPower + multiplierPower);
   });
 
@@ -301,18 +312,166 @@ main() {
     double initialValue = 2.137;
     int initialPower = 3;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplierValue = 9.857;
     int multiplierPower = 4;
-    double multiplier = 9.857 * pow(10, multiplierPower).toDouble();
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
     currency *= multiplier;
     expect(currency.value, 2.1064409);
     expect(currency.power, initialPower + multiplierPower + 1);
   });
 
-  test("Multiply by less than 1", () {
+  test("Multiply by 2", () {
     double initialValue = 1;
     int initialPower = 1;
     Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
-    double multiplier = 0.1;
-    expectThrow(() => currency *= multiplier, CannotMultiplyException);
+    double multiplierValue = 2;
+    int multiplierPower = 0;
+    Currency multiplier = Currency(value: multiplierValue, power: multiplierPower, preccision: preccision);
+    currency *= multiplier;
+    expect(currency.value, initialValue * multiplierValue);
+    expect(currency.power, initialPower + multiplierPower);
+  });
+
+  test("Multiply by double 10", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 10;
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, initialValue);
+    expect(currency.power, initialPower + 1);
+  });
+
+  test("Multiply by double 1000", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    int multiplierPower = 3;
+    double multiplier = pow(10, multiplierPower).toDouble();
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, initialValue);
+    expect(currency.power, initialPower + multiplierPower);
+  });
+
+  test("Multiply by double 2 when initial value is 5", () {
+    double initialValue = 5;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 2;
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, 1);
+    expect(currency.power, initialPower + 1);
+  });
+
+  test("Multiply by double 1.5 when initial value is 1", () {
+    double initialValue = 5;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 1.5;
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, initialValue * multiplier);
+    expect(currency.power, initialPower);
+  });
+
+  test("Multiply by double 1500 when initial value is 1", () {
+    double initialValue = 5;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    int multiplierPower = 3;
+    double multiplier = 1.5 * pow(10, multiplierPower).toDouble();
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, 7.5);
+    expect(currency.power, initialPower + multiplierPower);
+  });
+
+  test("Multiply by very big number when initial value is 1", () {
+    double initialValue = 1;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    double multiplier = 9843488432577855477.0;
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, 9.843488432578);
+    expect(currency.power, initialPower + 18);
+  });
+
+  test("Multiply by double weird number when initial value is weird number", () {
+    double initialValue = 2.137;
+    int initialPower = 3;
+    Currency currency = Currency(value: initialValue, power: initialPower, preccision: preccision);
+    int multiplierPower = 4;
+    double multiplier = 9.857 * pow(10, multiplierPower).toDouble();
+    currency = currency.multiplyByDouble(multiplier);
+    expect(currency.value, 2.1064409);
+    expect(currency.power, initialPower + multiplierPower + 1);
+  });
+
+  test("Pow 2 by 0 gives emptyCurrency", () {
+    Currency currency = Currency(value: 2, power: 1);
+    currency = currency.powByExponent(0);
+    expect(currency.value, 0);
+    expect(currency.power, 0);
+  });
+
+  test("Pow 2 by 1 gives same Currency", () {
+    double initialValue = 2;
+    int initialPower = 1;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(1);
+    expect(currency.value, initialValue);
+    expect(currency.power, initialPower);
+  });
+
+  test("Pow 2 by 2 gives same Currency with 4 in value", () {
+    double initialValue = 2;
+    int initialPower = 0;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(2);
+    expect(currency.value, 4);
+    expect(currency.power, initialPower);
+  });
+
+  test("Pow 2 by 3 gives same Currency with 8 in value", () {
+    double initialValue = 2;
+    int initialPower = 0;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(3);
+    expect(currency.value, 8);
+    expect(currency.power, initialPower);
+  });
+
+  test("Pow 2 by 4 gives same Currency with 1.6 in value", () {
+    double initialValue = 2;
+    int initialPower = 0;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(4);
+    expect(currency.value, 1.6);
+    expect(currency.power, 1);
+  });
+
+  test("Pow 2 by 10 gives same Currency with 1.6 in value", () {
+    double initialValue = 2;
+    int initialPower = 0;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(10);
+    expect(currency.value, 1.024);
+    expect(currency.power, 3);
+  });
+
+  test("Pow 2 by 32 gives same Currency with 4.294967296 in value", () {
+    double initialValue = 2;
+    int initialPower = 0;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(32);
+    expect(currency.value, 4.294967296);
+    expect(currency.power, 9);
+  });
+
+  test("Pow 2 by 256 gives same Currency with 1.157920892373 in value", () {
+    double initialValue = 2;
+    int initialPower = 0;
+    Currency currency = Currency(value: initialValue, power: initialPower);
+    currency = currency.powByExponent(256);
+    expect(currency.value, 1.157920892373);
+    expect(currency.power, 77);
   });
 }

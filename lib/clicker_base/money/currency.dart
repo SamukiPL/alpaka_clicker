@@ -4,41 +4,47 @@ import 'package:alpaka_clicker/util/exceptions/currency_exceptions.dart';
 import 'package:alpaka_clicker/util/ext/double_ext.dart';
 
 class Currency {
-  double value;
-  int power;
+  late final double _value;
+  final int power;
   final int preccision;
 
-  Currency({required this.value, required this.power, this.preccision = 12})
+  double get value => _value;
+
+  Currency({required double value, required this.power, this.preccision = 12})
       : assert(value < 10),
         assert(power >= 0),
         assert(!(value < 0 && power > 0)) {
-    value = value.toPrecision(preccision);
+    _value = value.toPrecision(preccision);
   }
 
   Currency operator +(Currency currency) {
+    double newValue = value;
+    int newPower = power;
     final powerDifference = currency.power - power;
     if (powerDifference <= -preccision) {
       return this;
     } else if (powerDifference > 0) {
-      power = currency.power;
-      value = currency.value + (value * pow(10, -powerDifference));
+      newPower = currency.power;
+      newValue = currency.value + (value * pow(10, -powerDifference));
     } else {
-      value += currency.value * pow(10, powerDifference);
+      newValue += currency.value * pow(10, powerDifference);
     }
-    _normalizeIncrease();
-    return this;
+    return _normalizeIncrease(newValue, newPower);
   }
 
-  void _normalizeIncrease() {
+  Currency _normalizeIncrease(double value, int power) {
+    double newValue = value;
+    int newPower = power;
     final length = value.toString().split(".")[0].length - 1;
-    value = value.toPrecision(preccision);
+    newValue = value.trimToOnePlaceBeforePoint().toPrecision(preccision);
     if (length > 0) {
-      value /= pow(10, length);
-      power += length;
+      newPower += length;
     }
+    return Currency(value: newValue, power: newPower);
   }
 
   Currency operator -(Currency currency) {
+    double newValue = value;
     if (this < currency) {
       throw CannotSubtractException();
     } else if (this == currency) {
@@ -48,31 +54,50 @@ class Currency {
     if (subtractedPower > preccision) {
       return Currency(value: 9.999999999999, power: power - 1, preccision: preccision);
     }
-    value = (value * pow(10, subtractedPower)) - currency.value;
-    _normalizeSubtract(currency.value);
-    return this;
+    newValue = (value * pow(10, subtractedPower)) - currency.value;
+    return _normalizeSubtract(currency.value, newValue, power);
   }
 
-  void _normalizeSubtract(double subtractedValue) {
+  Currency _normalizeSubtract(double subtractedValue, double value, int power) {
+    double newValue = value;
+    int newPower = power;
     if (subtractedValue <= 9) {
       final length = value.toString().split(".")[0].length - 1;
-      value /= pow(10, length);
-      power -= 1;
+      newValue /= pow(10, length);
+      newPower -= 1;
     } else {
       final length = subtractedValue.toString().length - 2;
-      value *= pow(10, length);
-      power -= length;
+      newValue *= pow(10, length);
+      newPower -= length;
     }
-    value = value.toPrecision(preccision);
+    return Currency(value: newValue, power: newPower);
   }
 
-  Currency operator *(double multiplier) {
+  Currency operator *(Currency currency) {
+    double newValue = value * currency.value;
+    int newPower = power + currency.power;
+    return _normalizeIncrease(newValue, newPower);
+  }
+
+  Currency multiplyByDouble(double multiplier) {
     if (multiplier < 1) {
       throw CannotMultiplyException();
     }
-    value *= multiplier;
-    _normalizeIncrease();
-    return this;
+    double newValue = value * multiplier;
+    return _normalizeIncrease(newValue, power);
+  }
+
+  Currency powByExponent(int exponent) {
+    if (exponent < 0) {
+      throw CannotPowException();
+    } else if (exponent == 0) {
+      return Currency(value: 1, power: 0);
+    }
+    Currency powCurrency = this;
+    for (int i = 1; i < exponent; i++) {
+      powCurrency *= this;
+    }
+    return powCurrency;
   }
 
   @override
