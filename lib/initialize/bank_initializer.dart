@@ -1,6 +1,6 @@
 import 'package:alpaka_clicker/initialize/initializer.dart';
-import 'package:alpaka_clicker/money/bank.dart';
-import 'package:alpaka_clicker/money/currency.dart';
+import 'package:alpaka_clicker/clicker_base/money/bank.dart';
+import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:get_it/get_it.dart';
 
 class BankInitializer extends Initializer {

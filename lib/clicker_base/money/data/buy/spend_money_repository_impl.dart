@@ -1,6 +1,6 @@
 import 'package:alpaka_clicker/clicker_base/money/bank.dart';
-import 'package:alpaka_clicker/clicker_base/money/domain/buy/models/property_offer_model.dart';
 import 'package:alpaka_clicker/clicker_base/money/domain/buy/spend_money_repository.dart';
+import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
 import 'package:alpaka_clicker/util/monad/result.dart';
 import 'package:logging/logging.dart';
 
@@ -10,7 +10,7 @@ class SpendMoneyRepositoryImpl extends SpendMoneyRepository {
   SpendMoneyRepositoryImpl(this._bank);
 
   @override
-  Future<Result<bool>> buyProperty(PropertyOfferModel model) async {
+  Future<Result<bool>> buyProperty(PropertyOffer model) async {
     try {
       _bank.spendMoney(model.price);
       _bank.raiseInterest(model.interest);

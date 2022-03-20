@@ -1,5 +1,5 @@
-import 'package:alpaka_clicker/money/domain/pay_interest_use_case.dart';
-import 'package:alpaka_clicker/money/domain/pay_salary_use_case.dart';
+import 'package:alpaka_clicker/clicker_base/money/domain/pay_interest_use_case.dart';
+import 'package:alpaka_clicker/clicker_base/money/domain/pay_salary_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
