@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/screens/property_shop/property_shop_screen.dart';
+import 'package:alpaka_clicker/flows/property_shop/screens/property_shop_screen.dart';
 import 'package:alpaka_clicker/util/widgets/navigation_bar/navigation_bar_listener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

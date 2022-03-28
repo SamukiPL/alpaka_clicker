@@ -209,10 +209,9 @@ main() {
 
   test("Add idiotic value", () {
     const startPower = 9223372036854775807;
-    Currency currency = Currency(value: 5, power: startPower, preccision: preccision);
     Currency add = Currency(value: 5, power: startPower, preccision: preccision);
     expectAssert(() {
-      currency += add;
+      Currency(value: 5, power: startPower, preccision: preccision) + add;
     });
   });
 
@@ -405,10 +404,10 @@ main() {
     expect(currency.power, initialPower + multiplierPower + 1);
   });
 
-  test("Pow 2 by 0 gives emptyCurrency", () {
+  test("Pow 2 by 0 gives Currency with value 1", () {
     Currency currency = Currency(value: 2, power: 1);
     currency = currency.powByExponent(0);
-    expect(currency.value, 0);
+    expect(currency.value, 1);
     expect(currency.power, 0);
   });
 
@@ -473,5 +472,26 @@ main() {
     currency = currency.powByExponent(256);
     expect(currency.value, 1.157920892373);
     expect(currency.power, 77);
+  });
+
+  test("Currency can be compared and returns -1 when compared to bigger value", () {
+    final smaller = Currency(value: 2.0, power: 1);
+    final bigger = Currency(value: 5.0, power: 1);
+    final result = smaller.compareTo(bigger);
+    expect(result, -1);
+  });
+
+  test("Currency can be compared and returns 0 when compared to same value", () {
+    final currency = Currency(value: 2.0, power: 1);
+    final sameCurrency = Currency(value: 2.0, power: 1);
+    final result = currency.compareTo(sameCurrency);
+    expect(result, 0);
+  });
+
+  test("Currency can be compared and returns -1 when compared to smaller value", () {
+    final bigger = Currency(value: 5.0, power: 1);
+    final smaller = Currency(value: 2.0, power: 1);
+    final result = bigger.compareTo(smaller);
+    expect(result, 1);
   });
 }

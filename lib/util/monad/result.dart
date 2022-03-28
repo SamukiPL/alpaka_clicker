@@ -1,4 +1,6 @@
 class Result<T> {
+  Result._();
+
   bool isSuccess() => this is Success<T>;
 
   bool isFailure() => this is Failure<T>;
@@ -16,16 +18,19 @@ class Result<T> {
     }
     return this;
   }
+
+  factory Result.success(T value) = Success;
+  factory Result.failure(Exception exception) = Failure;
 }
 
 class Success<T> extends Result<T> {
   final T value;
 
-  Success(this.value);
+  Success(this.value): super._();
 }
 
 class Failure<T> extends Result<T> {
   final Exception error;
 
-  Failure(this.error);
+  Failure(this.error): super._();
 }

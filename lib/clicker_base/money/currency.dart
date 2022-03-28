@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:alpaka_clicker/util/exceptions/currency_exceptions.dart';
 import 'package:alpaka_clicker/util/ext/double_ext.dart';
 
-class Currency {
+class Currency implements Comparable<Currency> {
   late final double _value;
   final int power;
   final int preccision;
@@ -113,4 +113,15 @@ class Currency {
 
   @override
   int get hashCode => Object.hashAll([power, value]);
+
+  @override
+  int compareTo(Currency other) {
+    if (this < other) {
+      return -1;
+    } else if (this == other) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
 }

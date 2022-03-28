@@ -37,6 +37,7 @@ class PositionedButton extends StatelessWidget {
             borderRadius: defaultRadius(),
             child: InkWell(
                 onTap: () => onTap(),
+                customBorder: RoundedRectangleBorder(borderRadius: defaultRadius()),
                 child: Container(decoration: buttonDecoration(), padding: padding, child: child))));
   }
 }
