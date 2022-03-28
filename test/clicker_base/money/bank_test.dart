@@ -3,6 +3,8 @@ import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/money/spend_money_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../testUtils/mocked_models.dart';
+
 void main() {
   test("Bank returns deposited currency", () {
     const value = 1.0;
@@ -162,19 +164,3 @@ void main() {
     expect(bank.getInterest().power, newPower);
   });
 }
-
-Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
-
-Bank bankWithMoney(double value, int power) =>
-    Bank(currency(value, power), emptyCurrency(), emptyCurrency());
-
-Bank bankWithInterest(double value, int power) =>
-    Bank(emptyCurrency(), emptyCurrency(), currency(value, power));
-
-Bank bankWithSalary(double value, int power) =>
-    Bank(emptyCurrency(), currency(value, power), emptyCurrency());
-
-Currency emptyCurrency() => Currency(value: 0.0, power: 0);
-
-Currency currency(double value, int power) =>
-    Currency(value: value, power: power);

@@ -8,6 +8,6 @@ class BankInitializer extends Initializer {
   Future<void> call() async {
     final getIt = GetIt.instance;
     getIt.registerSingleton<Bank>(
-        Bank(Currency(value: 0, power: 0), Currency(value: 1, power: 0), Currency(value: 0.016666, power: 0)));
+        Bank(Currency(value: 0, power: 0), Currency(value: 1, power: 0), Currency(value: 0, power: 0)));
   }
 }

@@ -2,13 +2,15 @@ import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../testUtils/mocked_models.dart';
+
 void main() {
   test("Property has key", () {
     const expectedKey = "key";
     final underTest = Property(
         key: expectedKey,
         count: 1,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
         baseInterest: emptyCurrency());
     expect(underTest.key, expectedKey);
@@ -19,29 +21,40 @@ void main() {
     final underTest = Property(
         key: "key",
         count: expectedKey,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
         baseInterest: emptyCurrency());
     expect(underTest.count, expectedKey);
   });
 
-  test("Property has key", () {
+  test("Property has incrementation", () {
+    const expectedKey = 21;
+    final underTest = Property(
+        key: "key",
+        count: expectedKey,
+        baseIncrementation: currency(1.07, 0),
+        basePrice: emptyCurrency(),
+        baseInterest: emptyCurrency());
+    expect(underTest.baseIncrementation, currency(1.07, 0));
+  });
+
+  test("Property has price", () {
     final expectedPrice = currency(1.0, 1);
     final underTest = Property(
         key: "key",
         count: 1,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: expectedPrice,
         baseInterest: emptyCurrency());
     expect(underTest.basePrice, expectedPrice);
   });
 
-  test("Property has key", () {
+  test("Property has interest", () {
     final expectedInterest = currency(1.0, 1);
     final underTest = Property(
         key: "key",
         count: 1,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
         baseInterest: expectedInterest);
     expect(underTest.baseInterest, expectedInterest);
@@ -53,7 +66,7 @@ void main() {
     final underTest = Property(
         key: "key",
         count: startCount,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
         baseInterest: emptyCurrency());
     underTest.addPurchased(purchasedCount);
@@ -66,7 +79,7 @@ void main() {
     final underTest = Property(
         key: "key",
         count: 1,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
         baseInterest: baseInterest);
     underTest.multiplyInterest(interestMultiplier);
@@ -79,14 +92,14 @@ void main() {
     final underTest = Property(
         key: "key",
         count: count,
-        baseIncrementation: incrementation(),
+        baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
         baseInterest: baseInterest);
     expect(underTest.getCurrentInterest(), baseInterest.multiplyByDouble(count.toDouble()));
   });
 
   test("Property returns price for iteration = 1 with some formula", () {
-    final increment = incrementation();
+    final increment = currency(1.07, 0);
     final basePrice = currency(1, 1);
     final underTest = Property(
         key: "key", count: 0, baseIncrementation: increment, basePrice: basePrice, baseInterest: emptyCurrency());
@@ -97,7 +110,7 @@ void main() {
   });
 
   test("Property returns price for iteration = 10 with some formula", () {
-    final increment = incrementation();
+    final increment = currency(1.07, 0);
     final basePrice = currency(1, 1);
     final underTest = Property(
         key: "key", count: 0, baseIncrementation: increment, basePrice: basePrice, baseInterest: emptyCurrency());
@@ -107,7 +120,7 @@ void main() {
   });
 
   test("Property returns price for iteration = 100 with some formula", () {
-    final increment = incrementation();
+    final increment = currency(1.07, 0);
     final basePrice = currency(1, 1);
     final underTest = Property(
         key: "key", count: 0, baseIncrementation: increment, basePrice: basePrice, baseInterest: emptyCurrency());
@@ -248,9 +261,3 @@ void main() {
     expect(offer.interest, baseInterest.multiplyByDouble(offerCount.toDouble()));
   });
 }
-
-Currency incrementation() => Currency(value: 1.07, power: 0);
-
-Currency emptyCurrency() => Currency(value: 0.0, power: 0);
-
-Currency currency(double value, int power) => Currency(value: value, power: power);
