@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:alpaka_clicker/money/domain/get_displayable_money_use_case.dart';
+import 'package:alpaka_clicker/clicker_base/money/domain/get_displayable_money_use_case.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 

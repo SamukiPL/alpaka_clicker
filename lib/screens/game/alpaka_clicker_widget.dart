@@ -13,7 +13,7 @@ class AlpakaClickerWidget extends StatelessWidget {
     return Scaffold(
       appBar: MoneyCounterToolbar(),
       body: Stack(
-        children: [GameWidget(game: ClickerGame()), const MainScreenMenu()],
+        children: [GameWidget(game: ClickerGame()), MainScreenMenu()],
       ),
     );
   }

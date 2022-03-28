@@ -5,8 +5,20 @@ void expectThrow(Function testBlock, Type errorType) {
   try {
     testBlock();
     didThrow = false;
-  } catch(error) {
+  } catch (error) {
     expect(error.runtimeType, errorType);
+  } finally {
+    assert(didThrow);
+  }
+}
+
+void expectAssert(Function testBlock) {
+  bool didThrow = true;
+  try {
+    testBlock();
+    didThrow = false;
+  } catch (error) {
+    print("Dart is bad");
   } finally {
     assert(didThrow);
   }
@@ -17,7 +29,7 @@ Future<void> expectAsyncThrow(Future Function() testBlock, Type errorType) async
   try {
     await testBlock();
     didThrow = false;
-  } catch(error) {
+  } catch (error) {
     expect(error.runtimeType, errorType);
   } finally {
     assert(didThrow);
