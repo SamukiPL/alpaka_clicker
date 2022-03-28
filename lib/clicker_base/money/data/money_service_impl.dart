@@ -35,9 +35,9 @@ class MoneyServiceImpl implements MoneyService {
 
   @override
   Stream<Result<String>> getDisplayableMoney() {
-    return getDepositedMoney().map((money) {
+    return _displaySubject.throttleTime(const Duration(milliseconds: 16), leading: false, trailing: true).map((_) {
       try {
-        return Success(_beautifier.beautifyCurrency(money));
+        return Success(_beautifier.beautifyCurrency(_bank.getMoney()));
       } on Exception catch (e) {
         return Failure<String>(e);
       }
