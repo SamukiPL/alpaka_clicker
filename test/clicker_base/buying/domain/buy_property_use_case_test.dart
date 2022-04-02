@@ -15,20 +15,20 @@ void main() {
   final buyingService = MockBuyingService();
   final offer = emptyPropertyOffer();
 
-  test("BuyingService return Success with BuyingState.Bought", () async {
+  test("BuyingService return Success with BuyingState.bought", () async {
     when(buyingService.buyProperty(any)).thenAnswer((_) async => Result.success(BuyingState.bought));
     final underTest = BuyPropertyUseCase(buyingService);
     final returned = await underTest(offer);
     expect(returned.isSuccess(), true);
-    expect((returned as Success).value.runtimeType, BuyingState.bought);
+    expect((returned as Success).value, BuyingState.bought);
   });
 
-  test("BuyingService return Success with BuyingState.NotEnoughMoney", () async {
+  test("BuyingService return Success with BuyingState.notEnoughMoney", () async {
     when(buyingService.buyProperty(any)).thenAnswer((_) async => Result.success(BuyingState.notEnoughMoney));
     final underTest = BuyPropertyUseCase(buyingService);
     final returned = await underTest(offer);
     expect(returned.isSuccess(), true);
-    expect((returned as Success).value.runtimeType, BuyingState.notEnoughMoney);
+    expect((returned as Success).value, BuyingState.notEnoughMoney);
   });
 
   test("MoneyRepository return Stream and emits Failure with FormatException", () async {

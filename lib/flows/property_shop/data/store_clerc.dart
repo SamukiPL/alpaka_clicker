@@ -18,8 +18,8 @@ class StoreClerc {
     return changedSize > 0;
   }
 
-  void updateCurrentOffers(List<PropertyOffer> offers) {
-    final sortedOffers = offers.map((e) => e.price).toList()..sort();
+  void updateCurrentOffers(Iterable<PropertyOffer> offers, Currency moneyOwned) {
+    final sortedOffers = offers.map((e) => e.price).takeWhile((price) => price > moneyOwned).toList()..sort();
     _prices.clear();
     _prices.addAll(sortedOffers);
   }
