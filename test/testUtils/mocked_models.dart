@@ -1,5 +1,6 @@
 import 'package:alpaka_clicker/clicker_base/money/bank.dart';
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
+import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
 
 Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
@@ -16,3 +17,6 @@ Currency currency(double value, int power) => Currency(value: value, power: powe
 
 Property emptyProperty() => Property(
     key: "", count: 0, baseIncrementation: emptyCurrency(), basePrice: emptyCurrency(), baseInterest: emptyCurrency());
+
+PropertyOffer emptyPropertyOffer() =>
+    PropertyOffer(key: "", count: 1, price: emptyCurrency(), interest: emptyCurrency());
