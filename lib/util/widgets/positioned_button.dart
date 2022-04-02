@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/theme/decorations.dart';
+import 'package:alpaka_clicker/util/widgets/buttons/clicker_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,12 +32,10 @@ class PositionedButton extends StatelessWidget {
         top: top,
         right: right,
         bottom: bottom,
-        child: Material(
-            color: Colors.white,
-            borderRadius: defaultRadius(),
-            child: InkWell(
-                onTap: () => onTap(),
-                customBorder: RoundedRectangleBorder(borderRadius: defaultRadius()),
-                child: Container(decoration: buttonDecoration(), padding: padding, child: child))));
+        child: ClickerButton(
+          child: child,
+          onTap: onTap,
+          padding: padding,
+        ));
   }
 }
