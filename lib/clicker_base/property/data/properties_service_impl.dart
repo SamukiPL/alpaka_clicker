@@ -8,9 +8,7 @@ class PropertiesServiceImpl implements PropertiesService {
 
   PropertiesServiceImpl(this._properties);
 
-  late final PublishSubject<List<Property>> _displaySubject = PublishSubject(onListen: () {
-    _displaySubject.add(_properties);
-  });
+  late final BehaviorSubject<List<Property>> _displaySubject = BehaviorSubject.seeded(_properties);
 
   @override
   List<Property> getProperties() => _properties;
