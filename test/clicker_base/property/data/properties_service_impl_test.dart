@@ -14,7 +14,7 @@ void main() {
   test("Property services returns current properties list async", () async {
     List<Property> list = [];
     final underTest = PropertiesServiceImpl(list);
-    underTest.getProperties().listen(expectAsync1((returned) {
+    underTest.listenToProperties().listen(expectAsync1((returned) {
       expect(returned, list);
     }, count: 1));
   });
@@ -26,7 +26,7 @@ void main() {
     final underTest = PropertiesServiceImpl(list);
     underTest.increasePropertyCount(offer);
 
-    underTest.getProperties().listen(expectAsync1((returned) {
+    underTest.listenToProperties().listen(expectAsync1((returned) {
       expect(returned, list);
       final properties = returned.first;
       expect(properties.count, offer.count);

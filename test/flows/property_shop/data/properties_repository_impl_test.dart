@@ -1,8 +1,8 @@
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
 import 'package:alpaka_clicker/flows/property_shop/data/properties_repository_impl.dart';
-import 'package:alpaka_clicker/flows/property_shop/domain/buy_amount.dart';
-import 'package:alpaka_clicker/flows/property_shop/domain/property_model.dart';
+import 'package:alpaka_clicker/flows/property_shop/domain/models/buy_amount.dart';
+import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:rxdart/rxdart.dart';
@@ -31,22 +31,24 @@ void main() {
   final _moneyService = MockMoneyService();
   final _propertiesService = MockPropertiesService();
   final _storeClerc = MockStoreClerc();
+  final _beautifier = MockCurrencyBeautifier();
   setUp(() {
     resetMockitoState();
+    when(_beautifier.beautifyCurrency(any)).thenReturn("");
   });
 
   test("BuyAmount can be changed", () {
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.changeBuyAmount(BuyAmount.hundred);
   });
 
   test("Repository starts with BuyAmount.one", () {
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     expect(underTest.getBuyCount(), 1);
   });
 
   test("Returns int for current BuyAmount", () {
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.changeBuyAmount(BuyAmount.hundred);
     expect(underTest.getBuyCount(), 100);
   });
@@ -55,12 +57,12 @@ void main() {
     final currencySubject = PublishSubject<Currency>();
     final propertiesSubject = PublishSubject<List<Property>>();
     when(_moneyService.getDepositedMoney()).thenAnswer((_) => currencySubject.stream);
-    when(_propertiesService.getProperties()).thenAnswer((_) => propertiesSubject.stream);
+    when(_propertiesService.listenToProperties()).thenAnswer((_) => propertiesSubject.stream);
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {
-      verify(_storeClerc.updateCurrentOffers(any));
+      verify(_storeClerc.updateCurrentOffers(any, any));
       }, max: 1));
     currencySubject.add(emptyCurrency());
     propertiesSubject.add([]);
@@ -70,10 +72,10 @@ void main() {
     final currencySubject = PublishSubject<Currency>();
     final propertiesSubject = PublishSubject<List<Property>>();
     when(_moneyService.getDepositedMoney()).thenAnswer((_) => currencySubject.stream);
-    when(_propertiesService.getProperties()).thenAnswer((_) => propertiesSubject.stream);
+    when(_propertiesService.listenToProperties()).thenAnswer((_) => propertiesSubject.stream);
     when(_storeClerc.canAffordNewItem(any)).thenReturn(true);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {}, max: 2));
     currencySubject.add(emptyCurrency());
     propertiesSubject.add([]);
@@ -84,25 +86,24 @@ void main() {
     final currencySubject = PublishSubject<Currency>();
     final propertiesSubject = PublishSubject<List<Property>>();
     when(_moneyService.getDepositedMoney()).thenAnswer((_) => currencySubject.stream);
-    when(_propertiesService.getProperties()).thenAnswer((_) => propertiesSubject.stream);
+    when(_propertiesService.listenToProperties()).thenAnswer((_) => propertiesSubject.stream);
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {}, max: 1));
     currencySubject.add(emptyCurrency());
     propertiesSubject.add([]);
     currencySubject.add(emptyCurrency());
-    propertiesSubject.add([]);
   });
 
   test("Changing buy amount will cause to not distinct next event", () async {
     final currencySubject = PublishSubject<Currency>();
     final propertiesSubject = PublishSubject<List<Property>>();
     when(_moneyService.getDepositedMoney()).thenAnswer((_) => currencySubject.stream);
-    when(_propertiesService.getProperties()).thenAnswer((_) => propertiesSubject.stream);
+    when(_propertiesService.listenToProperties()).thenAnswer((_) => propertiesSubject.stream);
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {}, max: 2));
     currencySubject.add(emptyCurrency());
     propertiesSubject.add([]);
@@ -116,10 +117,10 @@ void main() {
     final currencySubject = PublishSubject<Currency>();
     final propertiesSubject = PublishSubject<List<Property>>();
     when(_moneyService.getDepositedMoney()).thenAnswer((_) => currencySubject.stream);
-    when(_propertiesService.getProperties()).thenAnswer((_) => propertiesSubject.stream);
+    when(_propertiesService.listenToProperties()).thenAnswer((_) => propertiesSubject.stream);
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {}, max: 2));
     currencySubject.add(emptyCurrency());
     propertiesSubject.add([]);
@@ -133,12 +134,12 @@ void main() {
     when(_moneyService.getDepositedMoney()).thenAnswer((_) async* {
       yield emptyCurrency();
     });
-    when(_propertiesService.getProperties()).thenAnswer((_) async* {
+    when(_propertiesService.listenToProperties()).thenAnswer((_) async* {
       yield _properties;
     });
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {
       expect(event.isSuccess(), true);
       event.onSuccess((value) {
@@ -152,12 +153,12 @@ void main() {
     when(_moneyService.getDepositedMoney()).thenAnswer((_) async* {
       yield _cheapest;
     });
-    when(_propertiesService.getProperties()).thenAnswer((_) async* {
+    when(_propertiesService.listenToProperties()).thenAnswer((_) async* {
       yield _properties;
     });
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {
       expect(event.isSuccess(), true);
       event.onSuccess((value) {
@@ -172,12 +173,12 @@ void main() {
     when(_moneyService.getDepositedMoney()).thenAnswer((_) async* {
       yield _mostExpensive;
     });
-    when(_propertiesService.getProperties()).thenAnswer((_) async* {
+    when(_propertiesService.listenToProperties()).thenAnswer((_) async* {
       yield _properties;
     });
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {
       expect(event.isSuccess(), true);
       event.onSuccess((value) {
@@ -192,12 +193,12 @@ void main() {
     when(_moneyService.getDepositedMoney()).thenAnswer((_) async* {
       yield emptyCurrency();
     });
-    when(_propertiesService.getProperties()).thenAnswer((_) async* {
+    when(_propertiesService.listenToProperties()).thenAnswer((_) async* {
       yield _properties;
     });
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.getPropertiesList().listen(expectAsync1((event) {
       expect(event.isSuccess(), true);
       event.onSuccess((value) {
@@ -213,12 +214,12 @@ void main() {
     when(_moneyService.getDepositedMoney()).thenAnswer((_) async* {
       yield offer.price;
     });
-    when(_propertiesService.getProperties()).thenAnswer((_) async* {
+    when(_propertiesService.listenToProperties()).thenAnswer((_) async* {
       yield _properties;
     });
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.changeBuyAmount(BuyAmount.ten);
     underTest.getPropertiesList().listen(expectAsync1((event) {
       expect(event.isSuccess(), true);
@@ -236,12 +237,12 @@ void main() {
     when(_moneyService.getDepositedMoney()).thenAnswer((_) async* {
       yield offer.price;
     });
-    when(_propertiesService.getProperties()).thenAnswer((_) async* {
+    when(_propertiesService.listenToProperties()).thenAnswer((_) async* {
       yield _properties;
     });
     when(_storeClerc.canAffordNewItem(any)).thenReturn(false);
 
-    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc);
+    final underTest = PropertiesRepositoryImpl(_moneyService, _propertiesService, _storeClerc, _beautifier);
     underTest.changeBuyAmount(BuyAmount.hundred);
     underTest.getPropertiesList().listen(expectAsync1((event) {
       expect(event.isSuccess(), true);

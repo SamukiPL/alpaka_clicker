@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../testUtils/mocked_models.dart';
 
 void main() {
-  test("Store clerc takes current prices", () {
+  test("Store clerc takes current prices with currently owned money", () {
     final offers = [
       PropertyOffer(key: "", count: 0, price: currency(5, 5), interest: emptyCurrency()),
       PropertyOffer(key: "", count: 0, price: currency(5, 0), interest: emptyCurrency()),
@@ -13,7 +13,7 @@ void main() {
     ];
     final underTest = StoreClerc();
     expect(underTest.getCurrentPricesQueue.isEmpty, true);
-    underTest.updateCurrentOffers(offers);
+    underTest.updateCurrentOffers(offers, emptyCurrency());
     expect(underTest.getCurrentPricesQueue.isEmpty, false);
   });
 
@@ -28,9 +28,9 @@ void main() {
       PropertyOffer(key: "", count: 0, price: currency(5, 0), interest: emptyCurrency()),
     ];
     final underTest = StoreClerc();
-    underTest.updateCurrentOffers(offers);
+    underTest.updateCurrentOffers(offers, emptyCurrency());
     expect(underTest.getCurrentPricesQueue.length, offers.length);
-    underTest.updateCurrentOffers(onlyTwoOffers);
+    underTest.updateCurrentOffers(onlyTwoOffers, emptyCurrency());
     expect(underTest.getCurrentPricesQueue.length, onlyTwoOffers.length);
   });
 
@@ -45,11 +45,25 @@ void main() {
     ];
 
     final underTest = StoreClerc();
-    underTest.updateCurrentOffers(offers);
+    underTest.updateCurrentOffers(offers, emptyCurrency());
     final prices = underTest.getCurrentPricesQueue;
     expect(prices.removeFirst(), smallest);
     expect(prices.removeFirst(), mid);
     expect(prices.removeFirst(), biggest);
+  });
+
+  test("Store clerc takes prices and removes ones that can be bought immediately", () {
+    final smallest = currency(5, 0);
+    final biggest = currency(5, 5);
+    final offers = [
+      PropertyOffer(key: "", count: 0, price: biggest, interest: emptyCurrency()),
+      PropertyOffer(key: "", count: 0, price: smallest, interest: emptyCurrency()),
+    ];
+
+    final underTest = StoreClerc();
+    underTest.updateCurrentOffers(offers, smallest);
+    final prices = underTest.getCurrentPricesQueue;
+    expect(prices.length, 1);
   });
 
   test("Store clerc returns false if cannot afford anything", () {
@@ -63,7 +77,7 @@ void main() {
     ];
 
     final underTest = StoreClerc();
-    underTest.updateCurrentOffers(offers);
+    underTest.updateCurrentOffers(offers, emptyCurrency());
     expect(underTest.canAffordNewItem(emptyCurrency()), false);
   });
 
@@ -78,7 +92,7 @@ void main() {
     ];
 
     final underTest = StoreClerc();
-    underTest.updateCurrentOffers(offers);
+    underTest.updateCurrentOffers(offers, emptyCurrency());
     expect(underTest.canAffordNewItem(smallest), true);
   });
 
@@ -93,7 +107,7 @@ void main() {
     ];
 
     final underTest = StoreClerc();
-    underTest.updateCurrentOffers(offers);
+    underTest.updateCurrentOffers(offers, emptyCurrency());
     underTest.canAffordNewItem(biggest);
     expect(underTest.getCurrentPricesQueue.isEmpty, true);
   });
