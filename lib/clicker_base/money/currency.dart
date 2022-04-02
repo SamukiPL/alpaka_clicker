@@ -55,20 +55,21 @@ class Currency implements Comparable<Currency> {
       return Currency(value: 9.999999999999, power: power - 1, preccision: preccision);
     }
     newValue = (value * pow(10, subtractedPower)) - currency.value;
-    return _normalizeSubtract(currency.value, newValue, power);
+    int newPower = power - ((subtractedPower > 0 && value <= currency.value) ? 1 : 0);
+    return _normalizeSubtract(subtractedPower, newValue, newPower);
   }
 
-  Currency _normalizeSubtract(double subtractedValue, double value, int power) {
-    double newValue = value;
+  Currency _normalizeSubtract(int subtractedPower, double value, int power) {
+    double newValue = value.toPrecision(preccision);
     int newPower = power;
-    if (subtractedValue <= 9) {
+    if (newValue >= 1) {
       final length = value.toString().split(".")[0].length - 1;
       newValue /= pow(10, length);
-      newPower -= 1;
     } else {
-      final length = subtractedValue.toString().length - 2;
-      newValue *= pow(10, length);
-      newPower -= length;
+      while (newValue < 1) {
+        newValue *= 10;
+        newPower -= 1;
+      }
     }
     return Currency(value: newValue, power: newPower);
   }
