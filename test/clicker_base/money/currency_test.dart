@@ -141,7 +141,7 @@ main() {
     Currency subtract = Currency(value: 9.99, power: startPower - 1, preccision: preccision);
     currency -= subtract;
     expect(currency.value, 1);
-    expect(currency.power, startPower - 2);
+    expect(currency.power, startPower - 3);
   });
 
   test("Subtract very big value", () {
@@ -196,6 +196,46 @@ main() {
     currency -= subtract;
     expect(currency.value, 0);
     expect(currency.power, 0);
+  });
+
+  test("Subtract with half of the currency", () {
+    Currency currency = Currency(value: 1, power: 1, preccision: preccision);
+    Currency subtract = Currency(value: 5, power: 0, preccision: currency.preccision);
+    currency -= subtract;
+    expect(currency.value, 5);
+    expect(currency.power, 0);
+  });
+
+  test("Subtract with same power and with something after point", () {
+    Currency currency = Currency(value: 1.5, power: 1, preccision: preccision);
+    Currency subtract = Currency(value: 1, power: 1, preccision: currency.preccision);
+    currency -= subtract;
+    expect(currency.value, 5);
+    expect(currency.power, 0);
+  });
+
+  test("Subtract with same power and with something on position 10^2", () {
+    Currency currency = Currency(value: 1.05, power: 4, preccision: preccision);
+    Currency subtract = Currency(value: 1, power: 4, preccision: currency.preccision);
+    currency -= subtract;
+    expect(currency.value, 5);
+    expect(currency.power, 2);
+  });
+
+  test("Subtract test", () {
+    Currency currency = Currency(value: 3.2, power: 1, preccision: preccision);
+    Currency subtract = Currency(value: 1.5, power: 1, preccision: currency.preccision);
+    currency -= subtract;
+    expect(currency.value, 1.7);
+    expect(currency.power, 1);
+  });
+
+  test("Subtract with weird numbers", () {
+    Currency currency = Currency(value: 2.658439, power: 6, preccision: preccision);
+    Currency subtract = Currency(value: 1.35684, power: 5, preccision: currency.preccision);
+    currency -= subtract;
+    expect(currency.value, 2.522755);
+    expect(currency.power, 6);
   });
 
   test("Subtract idiotic value", () {
