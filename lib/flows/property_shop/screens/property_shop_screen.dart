@@ -50,22 +50,24 @@ class PropertyShopScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCurrentPerSecond() => Container(
-        width: double.infinity,
-        margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.only(left: 8, top: 4, right: 8, bottom: 4),
-        decoration: defaultDecoration(),
-        alignment: Alignment.centerRight,
-        child: TextScroll(
-          "213.721 WWWW/s",
-          style: defaultTextStyle(20),
-          textAlign: TextAlign.right,
-          mode: TextScrollMode.bouncing,
-          velocity: const Velocity(pixelsPerSecond: Offset(20, 20)),
-          pauseBetween: const Duration(seconds: 3),
-          selectable: false,
+  Widget _buildCurrentPerSecond() => Observer(
+    builder: (_) => Container(
+          width: double.infinity,
+          margin: const EdgeInsets.all(8),
+          padding: const EdgeInsets.only(left: 8, top: 4, right: 8, bottom: 4),
+          decoration: defaultDecoration(),
+          alignment: Alignment.centerRight,
+          child: TextScroll(
+            _controller.interestPerSecond,
+            style: defaultTextStyle(20),
+            textAlign: TextAlign.right,
+            mode: TextScrollMode.bouncing,
+            velocity: const Velocity(pixelsPerSecond: Offset(20, 20)),
+            pauseBetween: const Duration(seconds: 3),
+            selectable: false,
+          ),
         ),
-      );
+  );
 
   Widget _buildPropertiesList() => Observer(
       builder: (_) => ListView.separated(
