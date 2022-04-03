@@ -7,5 +7,8 @@ abstract class MoneyService {
   Future<void> paySalary();
 
   Stream<Currency> getDepositedMoney();
+
   Stream<Result<String>> getDisplayableMoney();
+
+  Future<Result<String>> getDisplayableInterestPerSecond();
 }
