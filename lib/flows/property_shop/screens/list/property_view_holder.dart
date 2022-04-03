@@ -62,7 +62,7 @@ class PropertyViewHolder extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.asset(
-          "assets/images/receive-money.png",
+          "assets/images/receive_money.png",
           height: 32,
           width: 32,
         ),
