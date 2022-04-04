@@ -52,7 +52,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
               PropertyModel(
                 name: "TODO Name",
                 count: properties.firstWhere((element) => element.key == offer.key).count,
-                displayableIncome: _beautifier.beautifyInterestPerSecond(property.baseInterest),
+                displayableIncome: _beautifier.beautifyCurrencyPerSecond(property.baseInterest),
                 displayablePrice: _beautifier.beautifyCurrency(offer.price),
                 offer: offer,
                 canBuy: offer.canBeBought(money),

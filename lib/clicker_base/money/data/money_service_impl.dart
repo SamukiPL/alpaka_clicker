@@ -47,7 +47,7 @@ class MoneyServiceImpl implements MoneyService {
   @override
   Future<Result<String>> getDisplayableInterestPerSecond() async {
     try {
-      return Success(_beautifier.beautifyInterestPerSecond(_bank.getInterest()));
+      return Success(_beautifier.beautifyCurrencyPerSecond(_bank.getInterest()));
     } on Exception catch (e) {
       return Failure<String>(e);
     }

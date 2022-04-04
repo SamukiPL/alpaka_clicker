@@ -54,7 +54,7 @@ class CurrencyBeautifier {
     return suffix.padLeft(suffix.length + 1);
   }
 
-  String beautifyInterestPerSecond(Currency currency) {
+  String beautifyCurrencyPerSecond(Currency currency) {
     if (currency.value < 1.6666 && currency.power ==0) {
       final newCurrency = currency.value * 60 * pow(10, currency.power);
       return "${newCurrency.toStringAsFixed(1).replaceAll(".", ",")}/s";
