@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 
 part 'money_counter_controller.g.dart';
 
-@injectable
+@singleton
 class MoneyCounterController = MoneyCounterControllerBase with _$MoneyCounterController;
 
 abstract class MoneyCounterControllerBase with Store {

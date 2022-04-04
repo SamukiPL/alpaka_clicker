@@ -136,4 +136,58 @@ void main() {
     final beautified = currencyBeautifier.beautifyCurrency(newCurrency);
     expect(beautified, "1.000 A@A");
   });
+
+  test("Per second currency with value 0.0016666 and power 0 returns \"0,1/s\"", () {
+    final newCurrency = currency(0.0016666, 0);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "0,1/s");
+  });
+
+  test("Per second currency with value 0.01 and power 0 returns \"0,6/s\"", () {
+    final newCurrency = currency(0.01, 0);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "0,6/s");
+  });
+
+  test("Per second currency with value 0.018333 and power 0 returns \"1,1/s\"", () {
+    final newCurrency = currency(0.018333, 0);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "1,1/s");
+  });
+
+  test("Per second currency with value 0.16833 and power 0 returns \"10,1/s\"", () {
+    final newCurrency = currency(0.168333, 0);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "10,1/s");
+  });
+
+  test("Per second currency with value 1.665 and power 0 returns \"99,9/s\"", () {
+    final newCurrency = currency(1.665, 0);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "99,9/s");
+  });
+
+  test("Per second currency with value 1.668333 and power 0 returns \"100/s\"", () {
+    final newCurrency = currency(1.668333, 0);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "100/s");
+  });
+
+  test("Per second currency with value 1.6665 and power 1 returns \"999/s\"", () {
+    final newCurrency = currency(1.6665, 1);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "999/s");
+  });
+
+  test("Per second currency with value 1.666666 and power 1 returns \"1.000/s\"", () {
+    final newCurrency = currency(1.666667, 1);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "1.000/s");
+  });
+
+  test("Per second currency with value 1.666666 and power 4 returns \"1.000 A/s\"", () {
+    final newCurrency = currency(1.666667, 4);
+    final beautified = currencyBeautifier.beautifyCurrencyPerSecond(newCurrency);
+    expect(beautified, "1.000 A/s");
+  });
 }
