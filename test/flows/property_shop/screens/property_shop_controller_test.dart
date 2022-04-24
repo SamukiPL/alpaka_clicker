@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart' as mobx;
 import 'package:mockito/mockito.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../testUtils/mocked_models.dart';
 import '../../../testUtils/mocks.mocks.dart';
 
 void main() {
@@ -56,7 +57,7 @@ void main() {
   });
 
   test("PropertyShopController can buy properties", () async {
-    final offer = MockPropertyOffer();
+    final offer = emptyPropertyOffer();
     final buyPropertyUseCase = MockBuyPropertyUseCase();
     when(buyPropertyUseCase(any)).thenAnswer((realInvocation) => Future.value(Result.success(BuyingState.bought)));
 
@@ -85,7 +86,7 @@ void main() {
     expect(underTest.models.isEmpty, true);
     await underTest.initializeController();
     await underTest.dispose();
-    subject.add(Result.success([MockPropertyModel()]));
+    subject.add(Result.success([emptyPropertyModel()]));
     verifyNever(interestPerSecondUseCase());
     mobx.when((p0) => true, () {
       assert(false);
@@ -99,7 +100,7 @@ void main() {
     final underTest = PropertyShopController(getOffersUseCase, buyPropertyUseCase, interestPerSecondUseCase);
     await underTest.initializeController();
     expect(underTest.models.isEmpty, true);
-    subject.add(Result.success([MockPropertyModel()]));
+    subject.add(Result.success([emptyPropertyModel()]));
     mobx.when((p0) => true, () {
       expect(underTest.models.length, 1);
     });
