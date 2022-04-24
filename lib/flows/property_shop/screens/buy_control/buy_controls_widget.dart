@@ -1,6 +1,7 @@
 import 'package:alpaka_clicker/base/base_colors.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/buy_amount.dart';
 import 'package:alpaka_clicker/flows/property_shop/screens/buy_control/buy_controls_controller.dart';
+import 'package:alpaka_clicker/flows/property_shop/screens/buy_control/buy_controls_ext.dart';
 import 'package:alpaka_clicker/theme/decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -55,20 +56,5 @@ class BuyControlsWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-extension BuyControlsExt on BuyAmount {
-  String getControlString() {
-    switch (this) {
-      case BuyAmount.one:
-        return "+1";
-      case BuyAmount.ten:
-        return "+10";
-      case BuyAmount.hundred:
-        return "+100";
-      default:
-        throw ArgumentError("There is no more controls");
-    }
   }
 }
