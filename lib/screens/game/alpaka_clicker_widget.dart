@@ -1,6 +1,6 @@
 import 'package:alpaka_clicker/screens/game/clicker_game.dart';
+import 'package:alpaka_clicker/screens/game/main_screen_toolbar.dart';
 import 'package:alpaka_clicker/util/widgets/main_screen_menu.dart';
-import 'package:alpaka_clicker/util/widgets/money_counters/money_counter_toolbar.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class AlpakaClickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MoneyCounterToolbar(),
+      appBar: MainScreenToolbar(),
       body: Stack(
         children: [GameWidget(game: ClickerGame()), MainScreenMenu()],
       ),
