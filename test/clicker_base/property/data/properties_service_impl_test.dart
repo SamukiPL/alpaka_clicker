@@ -21,7 +21,7 @@ void main() {
 
   test("Update property count by key", () async {
     const sameKey = "key";
-    List<Property> list = [Property(key: sameKey, count: 0, baseIncrementation: emptyCurrency(), basePrice: emptyCurrency(), baseInterest: emptyCurrency())];
+    List<Property> list = [Property(key: sameKey, name: "Name", count: 0, baseIncrementation: emptyCurrency(), basePrice: emptyCurrency(), baseInterest: emptyCurrency())];
     final offer = PropertyOffer(key: sameKey, count: 5, price: emptyCurrency(), interest: emptyCurrency());
     final underTest = PropertiesServiceImpl(list);
     underTest.increasePropertyCount(offer);

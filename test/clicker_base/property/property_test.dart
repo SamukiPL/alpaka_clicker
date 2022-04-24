@@ -9,6 +9,7 @@ void main() {
     const expectedKey = "key";
     final underTest = Property(
         key: expectedKey,
+        name: "name",
         count: 1,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -16,10 +17,23 @@ void main() {
     expect(underTest.key, expectedKey);
   });
 
+  test("Property has name", () {
+    const expectedName = "Guma Turbo";
+    final underTest = Property(
+        key: "key",
+        name: expectedName,
+        count: 1,
+        baseIncrementation: currency(1.07, 0),
+        basePrice: emptyCurrency(),
+        baseInterest: emptyCurrency());
+    expect(underTest.name, expectedName);
+  });
+
   test("Property has count", () {
     const expectedKey = 21;
     final underTest = Property(
         key: "key",
+        name: "name",
         count: expectedKey,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -31,6 +45,7 @@ void main() {
     const expectedKey = 21;
     final underTest = Property(
         key: "key",
+        name: "name",
         count: expectedKey,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -42,6 +57,7 @@ void main() {
     final expectedPrice = currency(1.0, 1);
     final underTest = Property(
         key: "key",
+        name: "name",
         count: 1,
         baseIncrementation: currency(1.07, 0),
         basePrice: expectedPrice,
@@ -53,6 +69,7 @@ void main() {
     final expectedInterest = currency(1.0, 1);
     final underTest = Property(
         key: "key",
+        name: "name",
         count: 1,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -65,6 +82,7 @@ void main() {
     const purchasedCount = 7;
     final underTest = Property(
         key: "key",
+        name: "name",
         count: startCount,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -78,6 +96,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: "key",
+        name: "name",
         count: 1,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -91,6 +110,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: "key",
+        name: "name",
         count: count,
         baseIncrementation: currency(1.07, 0),
         basePrice: emptyCurrency(),
@@ -102,7 +122,12 @@ void main() {
     final increment = currency(1.07, 0);
     final basePrice = currency(1, 1);
     final underTest = Property(
-        key: "key", count: 0, baseIncrementation: increment, basePrice: basePrice, baseInterest: emptyCurrency());
+        key: "key",
+        name: "name",
+        count: 0,
+        baseIncrementation: increment,
+        basePrice: basePrice,
+        baseInterest: emptyCurrency());
 
     const firstIteration = 1;
     final price = underTest.generatePrice(firstIteration);
@@ -113,7 +138,12 @@ void main() {
     final increment = currency(1.07, 0);
     final basePrice = currency(1, 1);
     final underTest = Property(
-        key: "key", count: 0, baseIncrementation: increment, basePrice: basePrice, baseInterest: emptyCurrency());
+        key: "key",
+        name: "name",
+        count: 0,
+        baseIncrementation: increment,
+        basePrice: basePrice,
+        baseInterest: emptyCurrency());
     const tenIteration = 10;
     final priceTen = underTest.generatePrice(tenIteration);
     expect(priceTen, basePrice * increment.powByExponent(tenIteration));
@@ -123,7 +153,12 @@ void main() {
     final increment = currency(1.07, 0);
     final basePrice = currency(1, 1);
     final underTest = Property(
-        key: "key", count: 0, baseIncrementation: increment, basePrice: basePrice, baseInterest: emptyCurrency());
+        key: "key",
+        name: "name",
+        count: 0,
+        baseIncrementation: increment,
+        basePrice: basePrice,
+        baseInterest: emptyCurrency());
 
     const hundredIteration = 100;
     final priceHundred = underTest.generatePrice(hundredIteration);
@@ -138,6 +173,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: key,
+        name: "name",
         count: initialCount,
         baseIncrementation: baseIncrementation,
         basePrice: basePrice,
@@ -158,6 +194,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: key,
+        name: "name",
         count: initialCount,
         baseIncrementation: baseIncrementation,
         basePrice: basePrice,
@@ -179,6 +216,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: key,
+        name: "name",
         count: initialCount,
         baseIncrementation: baseIncrementation,
         basePrice: basePrice,
@@ -200,6 +238,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: key,
+        name: "name",
         count: initialCount,
         baseIncrementation: baseIncrementation,
         basePrice: basePrice,
@@ -223,6 +262,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: key,
+        name: "name",
         count: initialCount,
         baseIncrementation: baseIncrementation,
         basePrice: basePrice,
@@ -246,6 +286,7 @@ void main() {
     final baseInterest = currency(1.0, 2);
     final underTest = Property(
         key: key,
+        name: "name",
         count: initialCount,
         baseIncrementation: baseIncrementation,
         basePrice: basePrice,
