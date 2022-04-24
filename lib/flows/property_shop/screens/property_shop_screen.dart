@@ -18,6 +18,7 @@ class PropertyShopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DisposableWidget(
+      initialize: () => _controller.initializeController(),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: MoneyCounterToolbar(),
