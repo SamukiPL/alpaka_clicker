@@ -20,7 +20,7 @@ class PropertyViewHolder extends StatelessWidget {
             children: [
               _buildName(),
               Text(
-                "Lvl ${model.count}",
+                "Lvl ${model.propertyCount}",
                 style: defaultTextStyle(16),
               ),
             ],

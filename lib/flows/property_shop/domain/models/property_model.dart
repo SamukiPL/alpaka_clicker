@@ -4,7 +4,7 @@ class PropertyModel {
   final String name;
   final String displayablePrice;
   final String displayableIncome;
-  final int count;
+  final int propertyCount;
   final PropertyOffer offer;
   final bool canBuy;
 
@@ -12,7 +12,7 @@ class PropertyModel {
     required this.name,
     required this.displayablePrice,
     required this.displayableIncome,
-    required this.count,
+    required this.propertyCount,
     required this.offer,
     required this.canBuy,
   });
