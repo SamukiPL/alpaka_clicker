@@ -20,12 +20,7 @@ abstract class PropertyShopControllerBase with Store {
 
   late final StreamSubscription _offersSubscription;
 
-  PropertyShopControllerBase(this._offersUseCase, this._buyPropertyUseCase, this._interestPerSecondUseCase) {
-    _offersSubscription = _offersUseCase().listen((event) {
-      event.onSuccess((value) => models = value);
-      updateInterestPerSecond();
-    });
-  }
+  PropertyShopControllerBase(this._offersUseCase, this._buyPropertyUseCase, this._interestPerSecondUseCase);
 
   @observable
   List<PropertyModel> models = List.empty();
@@ -33,11 +28,19 @@ abstract class PropertyShopControllerBase with Store {
   @observable
   String interestPerSecond = "0,0/s";
 
+  Future<void> initializeController() async {
+    _offersSubscription = _offersUseCase().listen((event) {
+      event.onSuccess((value) => models = value);
+      updateInterestPerSecond();
+    });
+  }
+
   Future<void> updateInterestPerSecond() async {
     (await _interestPerSecondUseCase()).onSuccess((value) => interestPerSecond = value);
   }
 
   Future<void> buyProperty(PropertyOffer offer) async {
+    //TODO handle success and error for better UX
     await _buyPropertyUseCase(offer);
   }
 

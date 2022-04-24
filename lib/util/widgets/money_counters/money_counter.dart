@@ -33,10 +33,13 @@ class MoneyCounter extends StatelessWidget {
                 ),
               ),
             ),
-            Image.asset(
-              "assets/images/kremowka.png",
-              height: 24,
-              width: 24,
+            Hero(
+              tag: "moneySign",
+              child: Image.asset(
+                "assets/images/kremowka.png",
+                height: 24,
+                width: 24,
+              ),
             )
           ],
         ),

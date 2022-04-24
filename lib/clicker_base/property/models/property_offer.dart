@@ -6,7 +6,7 @@ class PropertyOffer {
   final Currency price;
   final Currency interest;
 
-  PropertyOffer({required this.key, required this.count, required this.price, required this.interest});
+  const PropertyOffer({required this.key, required this.count, required this.price, required this.interest});
 
   bool canBeBought(Currency money) {
     return price <= money;

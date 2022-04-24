@@ -1,6 +1,7 @@
 import 'package:alpaka_clicker/flows/property_shop/domain/change_buy_amount_use_case.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/buy_amount.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
 part 'buy_controls_controller.g.dart';
@@ -16,8 +17,12 @@ abstract class BuyControlsControllerBase with Store {
 
   BuyControlsControllerBase(this._changeBuyAmountUseCase);
 
-  void setSelected(BuyAmount control) {
-    selected = control;
-    _changeBuyAmountUseCase(control);
+  Future<void> setSelected(BuyAmount control) async {
+    try {
+      await _changeBuyAmountUseCase(control);
+      selected = control;
+    } catch (e) {
+      Logger.root.shout(e);
+    }
   }
 }

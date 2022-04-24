@@ -2,6 +2,7 @@ import 'package:alpaka_clicker/clicker_base/money/bank.dart';
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
+import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
 
 Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
 
@@ -16,7 +17,30 @@ Currency emptyCurrency() => Currency(value: 0.0, power: 0);
 Currency currency(double value, int power) => Currency(value: value, power: power);
 
 Property emptyProperty() => Property(
-    key: "", count: 0, baseIncrementation: emptyCurrency(), basePrice: emptyCurrency(), baseInterest: emptyCurrency());
+    key: "",
+    name: "",
+    count: 0,
+    baseIncrementation: emptyCurrency(),
+    basePrice: emptyCurrency(),
+    baseInterest: emptyCurrency());
 
 PropertyOffer emptyPropertyOffer() =>
     PropertyOffer(key: "", count: 1, price: emptyCurrency(), interest: emptyCurrency());
+
+PropertyModel emptyPropertyModel() => PropertyModel(
+    name: "", displayablePrice: "", displayableIncome: "", propertyCount: 0, canBuy: false, offer: emptyPropertyOffer());
+
+PropertyModel propertyModel(
+        {String name = "",
+        String displayablePrice = "",
+        String displayableIncome = "",
+        int count = 1,
+        bool canBuy = false,
+        PropertyOffer? offer}) =>
+    PropertyModel(
+        name: name,
+        displayablePrice: displayablePrice,
+        displayableIncome: displayableIncome,
+        propertyCount: count,
+        canBuy: canBuy,
+        offer: offer ?? emptyPropertyOffer());

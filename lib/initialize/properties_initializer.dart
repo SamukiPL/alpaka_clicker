@@ -11,8 +11,8 @@ class PropertiesInitializer extends Initializer {
     final getIt = GetIt.instance;
     //TODO
     final tmpList = <Property>[
-      Property(key: "turbo", count: 0, baseIncrementation: Currency(value: 1.07, power: 0), basePrice: Currency(value: 1, power: 1), baseInterest: Currency(value: 0.016, power: 0)),
-      Property(key: "marysia", count: 0, baseIncrementation: Currency(value: 1.12, power: 0), basePrice: Currency(value: 1, power: 2), baseInterest: Currency(value: 5, power: 0))
+      Property(key: "turbo", name: "Guma Turbo", count: 0, baseIncrementation: Currency(value: 1.07, power: 0), basePrice: Currency(value: 1.5, power: 1), baseInterest: Currency(value: 0.0016, power: 0)),
+      Property(key: "marysia", name: "Marysia", count: 0, baseIncrementation: Currency(value: 1.12, power: 0), basePrice: Currency(value: 1, power: 2), baseInterest: Currency(value: 1, power: 0))
     ];
     getIt.registerSingleton<PropertiesService>(PropertiesServiceImpl(tmpList));
   }
