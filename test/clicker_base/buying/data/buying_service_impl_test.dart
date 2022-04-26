@@ -29,7 +29,7 @@ void main() {
     final underTest = BuyingServiceImpl(bank, propertiesService);
     final returned = await underTest.buyProperty(propertyOffer);
     expect(returned.isSuccess(), true);
-    expect((returned as Success).value, BuyingState.notEnoughMoney);
+    expect((returned as Success).value, BuyingState.notBought);
   });
 
   test("Bank throws exception on spendMoney", () async {

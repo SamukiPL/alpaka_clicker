@@ -44,7 +44,7 @@ class Bank {
     _currentInterest = interest;
   }
 
-  Future<SpendMoneyState> spendMoney(Currency currency, {FutureOr<void> Function(SpendMoneyState state)? reaction}) {
+  Future<SpendMoneyState> spendMoney(Currency currency, {required FutureOr<void> Function(SpendMoneyState state) reaction}) {
     return Future(() {
       final locked = _deposit.lock();
       locked.spendMoney(currency);
@@ -58,7 +58,7 @@ class Bank {
         throw ArgumentError("There shouldn't be any other exception/error here");
       }
     }).then((state) async {
-      await reaction?.call(state);
+      await reaction(state);
       if (state != SpendMoneyState.lockedDeposit) {
         _deposit.unlock();
       }
