@@ -6,8 +6,9 @@ import 'package:alpaka_clicker/clicker_base/property/domain/properties_service.d
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
 import 'package:alpaka_clicker/util/monad/result.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart';
 
-@Injectable(as: BuyingService)
+@Singleton(as: BuyingService)
 class BuyingServiceImpl extends BuyingService {
   final Bank _bank;
   final PropertiesService _propertiesService;
@@ -16,15 +17,20 @@ class BuyingServiceImpl extends BuyingService {
 
   @override
   Future<Result<BuyingState>> buyProperty(PropertyOffer offer) async {
-    try {
-      if (_bank.spendMoney(offer.price) == SpendMoneyState.success) {
+    return Future(() {
+      return _bank.spendMoney(offer.price, successReaction: () async {
         _bank.raiseInterest(offer.interest);
-        _propertiesService.increasePropertyCount(offer);
+        await _propertiesService.increasePropertyCount(offer);
+      });
+    }).then((state) {
+      if (state == SpendMoneyState.success) {
         return Result.success(BuyingState.bought);
+      } else {
+        return Result.success(BuyingState.notBought);
       }
-      return Result.success(BuyingState.notEnoughMoney);
-    } on Exception catch (e) {
-      return Result.failure(e);
-    }
+    }).onError((Object error, stackTrace) {
+      Logger.root.severe("BuyingServiceImpl", error);
+      return (error is Exception) ? Result.failure(error) : throw error;
+    });
   }
 }

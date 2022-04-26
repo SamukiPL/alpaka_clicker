@@ -247,6 +247,15 @@ main() {
     expect(currency.power, startPower - 1);
   });
 
+  test("Subtract values that will result with something below 0 power", () {
+    const startPower = 1;
+    Currency currency = Currency(value: 1.987, power: startPower, preccision: preccision);
+    Currency subtract = Currency(value: 1.98, power: startPower, preccision: preccision);
+    currency -= subtract;
+    expect(currency.value < 1, true);
+    expect(currency.power, 0);
+  });
+
   test("Add idiotic value", () {
     const startPower = 9223372036854775807;
     Currency add = Currency(value: 5, power: startPower, preccision: preccision);
@@ -533,5 +542,19 @@ main() {
     final smaller = Currency(value: 2.0, power: 1);
     final result = bigger.compareTo(smaller);
     expect(result, 1);
+  });
+
+  test("Currency can cut ceil its value to cut everything below power 0", () {
+    final currency = Currency(value: 2.10999, power: 2);
+    final result = currency.ceil();
+    expect(result.value, 2.10);
+    expect(result.power, 2);
+  });
+
+  test("Currency ceil will do nothing if power is bigger than precision", () {
+    final currency = Currency(value: 2.10999, power: 13);
+    final result = currency.ceil();
+    expect(result.value, 2.10999);
+    expect(result.power, 13);
   });
 }

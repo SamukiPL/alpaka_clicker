@@ -1,1 +1,1 @@
-enum BuyingState { bought, notEnoughMoney }
+enum BuyingState { bought, notBought }

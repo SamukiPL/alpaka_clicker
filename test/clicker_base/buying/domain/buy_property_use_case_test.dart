@@ -24,11 +24,11 @@ void main() {
   });
 
   test("BuyingService return Success with BuyingState.notEnoughMoney", () async {
-    when(buyingService.buyProperty(any)).thenAnswer((_) async => Result.success(BuyingState.notEnoughMoney));
+    when(buyingService.buyProperty(any)).thenAnswer((_) async => Result.success(BuyingState.notBought));
     final underTest = BuyPropertyUseCase(buyingService);
     final returned = await underTest(offer);
     expect(returned.isSuccess(), true);
-    expect((returned as Success).value, BuyingState.notEnoughMoney);
+    expect((returned as Success).value, BuyingState.notBought);
   });
 
   test("MoneyRepository return Stream and emits Failure with FormatException", () async {

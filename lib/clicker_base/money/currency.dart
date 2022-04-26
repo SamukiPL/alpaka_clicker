@@ -66,7 +66,7 @@ class Currency implements Comparable<Currency> {
       final length = value.toString().split(".")[0].length - 1;
       newValue /= pow(10, length);
     } else {
-      while (newValue < 1) {
+      while (newValue < 1 && newPower > 0) {
         newValue *= 10;
         newPower -= 1;
       }
@@ -99,6 +99,11 @@ class Currency implements Comparable<Currency> {
       powCurrency *= this;
     }
     return powCurrency;
+  }
+
+  Currency ceil() {
+    final newValue = value.trimAfterPoint(place: power);
+    return Currency(value: newValue, power: power);
   }
 
   @override

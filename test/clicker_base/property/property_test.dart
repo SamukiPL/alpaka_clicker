@@ -278,6 +278,27 @@ void main() {
     expect(offer.interest, baseInterest.multiplyByDouble(offerCount.toDouble()));
   });
 
+  test("On offers price ceil is used so that it will be always natural number", () {
+    const key = "key";
+    const initialCount = 0;
+    final baseIncrementation = Currency(value: 2.0, power: 0);
+    final basePrice = currency(3.21046487988, 3);
+    final baseInterest = currency(1.0, 2);
+    final underTest = Property(
+        key: key,
+        name: "name",
+        count: initialCount,
+        baseIncrementation: baseIncrementation,
+        basePrice: basePrice,
+        baseInterest: baseInterest);
+
+    const offerCount = 1;
+
+    final offer = underTest.getOffer(offerCount: offerCount);
+    expect(offer.price.value, 3.210);
+    expect(offer.price.power, 3);
+  });
+
   test("Base price is 1, incrementation 2 and I want to buy 5 when I already have 5", () {
     const key = "key";
     const initialCount = 5;

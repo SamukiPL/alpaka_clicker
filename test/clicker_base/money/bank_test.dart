@@ -67,26 +67,6 @@ void main() {
     expect(storedValue.power, 0);
   });
 
-  test("Bank allows us to spend money and it is success", () {
-    final price = Currency(value: 5, power: 1);
-    final bank = bankWithMoney(1.0, 2);
-    final result = bank.spendMoney(price);
-    expect(result, SpendMoneyState.success);
-    final storedValue = bank.getMoney();
-    expect(storedValue.value, 5);
-    expect(storedValue.power, 1);
-  });
-
-  test("Bank doesn't allows us to spend money and the price is too big", () {
-    final price = Currency(value: 5, power: 2);
-    final bank = bankWithMoney(1.0, 2);
-    final result = bank.spendMoney(price);
-    expect(result, SpendMoneyState.priceIsTooBig);
-    final storedValue = bank.getMoney();
-    expect(storedValue.value, 1);
-    expect(storedValue.power, 2);
-  });
-
   test("Bank returns salary", () {
     final salary = Currency(value: 5, power: 2);
     final bank = Bank(emptyCurrency(), salary, emptyCurrency());
@@ -109,7 +89,105 @@ void main() {
     expect(bank.getMoney().power, salaryPower);
   });
 
-  test("Full bank functionalities", () {
+  test("Change interest in bank", () {
+    const initialValue = 2.0;
+    const initialPower = 3;
+    final bank = bankWithInterest(initialValue, initialPower);
+
+    const newValue = 1.0;
+    const newPower = 7;
+    final newCurrency = currency(newValue, newPower);
+
+    bank.changeInterest(newCurrency);
+    expect(bank.getInterest().value, newValue);
+    expect(bank.getInterest().power, newPower);
+  });
+
+  test("Bank allows us to spend money and it is success", () async {
+    final price = Currency(value: 5, power: 1);
+    final bank = bankWithMoney(1.0, 2);
+    await bank.spendMoney(price, successReaction: () {});
+    final storedValue = bank.getMoney();
+    expect(storedValue.value, 5);
+    expect(storedValue.power, 1);
+  });
+
+  test("Bank doesn't allows us to spend money and the price is too big", () async {
+    final price = Currency(value: 5, power: 2);
+    final bank = bankWithMoney(1.0, 2);
+    await bank.spendMoney(price, successReaction: () {});
+    final storedValue = bank.getMoney();
+    expect(storedValue.value, 1);
+    expect(storedValue.power, 2);
+  });
+
+  test("Bank returns SpendMoneyState.lockedDeposit when two actions concurrently tries to spend money", () async {
+    final price = Currency(value: 1, power: 0);
+    final bank = bankWithMoney(1.0, 2);
+    final shouldBeSuccess = bank.spendMoney(price, successReaction: () async {
+      await Future.delayed(const Duration(milliseconds: 100));
+    });
+    final shouldBeLocked = bank.spendMoney(price, successReaction: () {});
+    expect(await shouldBeSuccess, SpendMoneyState.success);
+    expect(await shouldBeLocked, SpendMoneyState.lockedDeposit);
+  });
+
+  test("Bank calls reaction closure when spending money was successful", () async {
+    final price = Currency(value: 1, power: 0);
+    final bank = bankWithMoney(1.0, 2);
+    bool reactionWasCalled = false;
+    await bank.spendMoney(price, successReaction: () {
+      reactionWasCalled = true;
+    });
+    assert(reactionWasCalled);
+  });
+
+  test("Bank don't call reaction closure in other states than successful", () async {
+    final price = Currency(value: 1, power: 0);
+    final tooBigPrice = Currency(value: 1, power: 3);
+    final bank = bankWithMoney(1.0, 2);
+    bool reactionWasNotCalled = true;
+    await bank.spendMoney(price, successReaction: () async {
+      final shouldBeLockedState = await bank.spendMoney(price, successReaction: () {
+        reactionWasNotCalled = false;
+      });
+      expect(shouldBeLockedState, SpendMoneyState.lockedDeposit);
+    });
+    await bank.spendMoney(tooBigPrice, successReaction: () async {
+      reactionWasNotCalled = false;
+    });
+    assert(reactionWasNotCalled);
+  });
+
+  test("Bank calls reaction before unlocking deposit", () async {
+    final price = Currency(value: 1, power: 0);
+    final bank = bankWithMoney(1.0, 2);
+    final returned = await bank.spendMoney(price, successReaction: () async {
+      final shouldBeLockedState = await bank.spendMoney(price, successReaction: () {});
+      expect(shouldBeLockedState, SpendMoneyState.lockedDeposit);
+    });
+    expect(returned, SpendMoneyState.success);
+  });
+
+  test("Bank should only unlock when action was successful or too big to process", () async {
+    final price = Currency(value: 1, power: 0);
+    final tooBigPrice = Currency(value: 1, power: 3);
+    final bank = bankWithMoney(1.0, 2);
+    await bank.spendMoney(price, successReaction: () async {
+      final firstLocked = await bank.spendMoney(price, successReaction: () {});
+      expect(firstLocked, SpendMoneyState.lockedDeposit);
+      final secondLocked = await bank.spendMoney(price, successReaction: () {});
+      expect(secondLocked, SpendMoneyState.lockedDeposit);
+    });
+    await bank.spendMoney(tooBigPrice, successReaction: () async {
+      final shouldBeLockedState = await bank.spendMoney(price, successReaction: () {});
+      expect(shouldBeLockedState, SpendMoneyState.lockedDeposit);
+    });
+    final depositUnlockedShouldBeSuccess = await bank.spendMoney(price, successReaction: () {});
+    expect(depositUnlockedShouldBeSuccess, SpendMoneyState.success);
+  });
+
+  test("Full bank functionalities", () async {
     final bank = emptyBank();
 
     expect(bank.getMoney(), emptyCurrency());
@@ -138,29 +216,15 @@ void main() {
     expect(bank.getMoney().power, allCurrenciesCombined.power);
 
     final creamPiePrice = currency(2.137, 4);
-    final firstResult = bank.spendMoney(creamPiePrice);
+    final firstResult = await bank.spendMoney(creamPiePrice, successReaction: () {});
     expect(firstResult, SpendMoneyState.success);
     expect(bank.getMoney(), emptyCurrency());
 
-    final secondResult = bank.spendMoney(creamPiePrice);
+    final secondResult = await bank.spendMoney(creamPiePrice, successReaction: () {});
     expect(secondResult, SpendMoneyState.priceIsTooBig);
 
     expect(bank.getMoney(), emptyCurrency());
     expect(bank.getSalary(), salaryRise);
     expect(bank.getInterest(), interestRise);
-  });
-
-  test("Change interest in bank", () {
-    const initialValue = 2.0;
-    const initialPower = 3;
-    final bank = bankWithInterest(initialValue, initialPower);
-
-    const newValue = 1.0;
-    const newPower = 7;
-    final newCurrency = currency(newValue, newPower);
-
-    bank.changeInterest(newCurrency);
-    expect(bank.getInterest().value, newValue);
-    expect(bank.getInterest().power, newPower);
   });
 }
