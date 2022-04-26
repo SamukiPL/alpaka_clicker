@@ -44,25 +44,29 @@ class Bank {
     _currentInterest = interest;
   }
 
-  Future<SpendMoneyState> spendMoney(Currency currency, {required FutureOr<void> Function(SpendMoneyState state) reaction}) {
-    return Future(() {
+  Future<SpendMoneyState> spendMoney(Currency currency, {required FutureOr<void> Function() successReaction}) {
+    return Future(() async {
       final locked = _deposit.lock();
       locked.spendMoney(currency);
       return SpendMoneyState.success;
-    }).onError((error, stackTrace) {
-      if (error is CannotSubtractException) {
-        return SpendMoneyState.priceIsTooBig;
-      } else if (error is StateError) {
-        return SpendMoneyState.lockedDeposit;
-      } else {
-        throw ArgumentError("There shouldn't be any other exception/error here");
+    }).onError((Object error, stackTrace) => _handleSpendMoneyError(error)).then((state) async {
+      if (state == SpendMoneyState.success) {
+        await successReaction();
       }
-    }).then((state) async {
-      await reaction(state);
       if (state != SpendMoneyState.lockedDeposit) {
         _deposit.unlock();
       }
       return state;
     });
+  }
+
+  SpendMoneyState _handleSpendMoneyError(Object error) {
+    if (error is CannotSubtractException) {
+      return SpendMoneyState.priceIsTooBig;
+    } else if (error is StateError) {
+      return SpendMoneyState.lockedDeposit;
+    } else {
+      throw error;
+    }
   }
 }

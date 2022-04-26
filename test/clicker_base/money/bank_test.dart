@@ -106,8 +106,7 @@ void main() {
   test("Bank allows us to spend money and it is success", () async {
     final price = Currency(value: 5, power: 1);
     final bank = bankWithMoney(1.0, 2);
-    final result = await bank.spendMoney(price);
-    expect(result, SpendMoneyState.success);
+    await bank.spendMoney(price, successReaction: () {});
     final storedValue = bank.getMoney();
     expect(storedValue.value, 5);
     expect(storedValue.power, 1);
@@ -116,36 +115,55 @@ void main() {
   test("Bank doesn't allows us to spend money and the price is too big", () async {
     final price = Currency(value: 5, power: 2);
     final bank = bankWithMoney(1.0, 2);
-    final result = await bank.spendMoney(price);
-    expect(result, SpendMoneyState.priceIsTooBig);
+    await bank.spendMoney(price, successReaction: () {});
     final storedValue = bank.getMoney();
     expect(storedValue.value, 1);
     expect(storedValue.power, 2);
   });
 
-  test("Bank returns SpendMoneyState.lockedDeposit when two actions concurrently tries to spend money", () {
+  test("Bank returns SpendMoneyState.lockedDeposit when two actions concurrently tries to spend money", () async {
     final price = Currency(value: 1, power: 0);
     final bank = bankWithMoney(1.0, 2);
-    Future.value(bank.spendMoney(price)).then(expectAsync1((state) => expect(state, SpendMoneyState.success)));
-    Future.value(bank.spendMoney(price)).then(expectAsync1((state) => expect(state, SpendMoneyState.lockedDeposit)));
+    final shouldBeSuccess = bank.spendMoney(price, successReaction: () async {
+      await Future.delayed(const Duration(milliseconds: 100));
+    });
+    final shouldBeLocked = bank.spendMoney(price, successReaction: () {});
+    expect(await shouldBeSuccess, SpendMoneyState.success);
+    expect(await shouldBeLocked, SpendMoneyState.lockedDeposit);
   });
 
-  test("Bank accepts reaction closure when spending money", () async {
+  test("Bank calls reaction closure when spending money was successful", () async {
     final price = Currency(value: 1, power: 0);
     final bank = bankWithMoney(1.0, 2);
     bool reactionWasCalled = false;
-    await bank.spendMoney(price, reaction: (state) {
+    await bank.spendMoney(price, successReaction: () {
       reactionWasCalled = true;
     });
     assert(reactionWasCalled);
   });
 
+  test("Bank don't call reaction closure in other states than successful", () async {
+    final price = Currency(value: 1, power: 0);
+    final tooBigPrice = Currency(value: 1, power: 3);
+    final bank = bankWithMoney(1.0, 2);
+    bool reactionWasNotCalled = true;
+    await bank.spendMoney(price, successReaction: () async {
+      final shouldBeLockedState = await bank.spendMoney(price, successReaction: () {
+        reactionWasNotCalled = false;
+      });
+      expect(shouldBeLockedState, SpendMoneyState.lockedDeposit);
+    });
+    await bank.spendMoney(tooBigPrice, successReaction: () async {
+      reactionWasNotCalled = false;
+    });
+    assert(reactionWasNotCalled);
+  });
+
   test("Bank calls reaction before unlocking deposit", () async {
     final price = Currency(value: 1, power: 0);
     final bank = bankWithMoney(1.0, 2);
-    final returned = await bank.spendMoney(price, reaction: (state) async {
-      expect(state, SpendMoneyState.success);
-      final shouldBeLockedState = await bank.spendMoney(price);
+    final returned = await bank.spendMoney(price, successReaction: () async {
+      final shouldBeLockedState = await bank.spendMoney(price, successReaction: () {});
       expect(shouldBeLockedState, SpendMoneyState.lockedDeposit);
     });
     expect(returned, SpendMoneyState.success);
@@ -155,17 +173,17 @@ void main() {
     final price = Currency(value: 1, power: 0);
     final tooBigPrice = Currency(value: 1, power: 3);
     final bank = bankWithMoney(1.0, 2);
-    await bank.spendMoney(price, reaction: (state) async {
-      final firstLocked = await bank.spendMoney(price);
+    await bank.spendMoney(price, successReaction: () async {
+      final firstLocked = await bank.spendMoney(price, successReaction: () {});
       expect(firstLocked, SpendMoneyState.lockedDeposit);
-      final secondLocked = await bank.spendMoney(price);
+      final secondLocked = await bank.spendMoney(price, successReaction: () {});
       expect(secondLocked, SpendMoneyState.lockedDeposit);
     });
-    await bank.spendMoney(tooBigPrice, reaction: (state) async {
-      final shouldBeLockedState = await bank.spendMoney(price);
+    await bank.spendMoney(tooBigPrice, successReaction: () async {
+      final shouldBeLockedState = await bank.spendMoney(price, successReaction: () {});
       expect(shouldBeLockedState, SpendMoneyState.lockedDeposit);
     });
-    final depositUnlockedShouldBeSuccess = await bank.spendMoney(price);
+    final depositUnlockedShouldBeSuccess = await bank.spendMoney(price, successReaction: () {});
     expect(depositUnlockedShouldBeSuccess, SpendMoneyState.success);
   });
 
@@ -198,11 +216,11 @@ void main() {
     expect(bank.getMoney().power, allCurrenciesCombined.power);
 
     final creamPiePrice = currency(2.137, 4);
-    final firstResult = await bank.spendMoney(creamPiePrice);
+    final firstResult = await bank.spendMoney(creamPiePrice, successReaction: () {});
     expect(firstResult, SpendMoneyState.success);
     expect(bank.getMoney(), emptyCurrency());
 
-    final secondResult = await bank.spendMoney(creamPiePrice);
+    final secondResult = await bank.spendMoney(creamPiePrice, successReaction: () {});
     expect(secondResult, SpendMoneyState.priceIsTooBig);
 
     expect(bank.getMoney(), emptyCurrency());

@@ -17,21 +17,20 @@ class BuyingServiceImpl extends BuyingService {
 
   @override
   Future<Result<BuyingState>> buyProperty(PropertyOffer offer) async {
-    try {
-      final buyingState = await _bank.spendMoney(offer.price, reaction: (state) async {
+    return Future(() {
+      return _bank.spendMoney(offer.price, successReaction: () async {
         _bank.raiseInterest(offer.interest);
         await _propertiesService.increasePropertyCount(offer);
-      }).then((state) {
-        if (state == SpendMoneyState.success) {
-          BuyingState.bought;
-        } else {
-          BuyingState.notBought;
-        }
       });
-      return Result.success(buyingState);
-    } on Exception catch (e) {
-      Logger.root.severe("BuyingServiceImpl", e);
-      return Result.failure(e);
-    }
+    }).then((state) {
+      if (state == SpendMoneyState.success) {
+        return Result.success(BuyingState.bought);
+      } else {
+        return Result.success(BuyingState.notBought);
+      }
+    }).onError((Object error, stackTrace) {
+      Logger.root.severe("BuyingServiceImpl", error);
+      return (error is Exception) ? Result.failure(error) : throw error;
+    });
   }
 }
