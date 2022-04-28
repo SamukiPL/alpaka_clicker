@@ -27,7 +27,7 @@ class Property {
     for (int i = 1; i < offerCount; i++) {
       price += generatePrice(i);
     }
-    final priceAfterCeil = price.ceil();
+    final priceAfterCeil = price.floor();
     final interest = baseInterest.multiplyByDouble(offerCount.toDouble());
     return PropertyOffer(key: key, count: offerCount, price: priceAfterCeil, interest: interest);
   }

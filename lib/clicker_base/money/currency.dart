@@ -35,7 +35,7 @@ class Currency implements Comparable<Currency> {
   Currency _normalizeIncrease(double value, int power) {
     double newValue = value;
     int newPower = power;
-    final length = value.toString().split(".")[0].length - 1;
+    final length = _getLengthBeforePointWithoutFirstNumber(value);
     newValue = value.trimToOnePlaceBeforePoint().toPrecision(preccision);
     if (length > 0) {
       newPower += length;
@@ -55,15 +55,15 @@ class Currency implements Comparable<Currency> {
       return Currency(value: 9.999999999999, power: power - 1, preccision: preccision);
     }
     newValue = (value * pow(10, subtractedPower)) - currency.value;
-    int newPower = power - ((subtractedPower > 0 && value <= currency.value) ? 1 : 0);
+    int newPower = power - (subtractedPower - _getLengthBeforePointWithoutFirstNumber(newValue));
     return _normalizeSubtract(subtractedPower, newValue, newPower);
   }
 
   Currency _normalizeSubtract(int subtractedPower, double value, int power) {
     double newValue = value.toPrecision(preccision);
     int newPower = power;
-    if (newValue >= 1) {
-      final length = value.toString().split(".")[0].length - 1;
+    if (newValue >= 10) {
+      final length = _getLengthBeforePointWithoutFirstNumber(value);
       newValue /= pow(10, length);
     } else {
       while (newValue < 1 && newPower > 0) {
@@ -101,10 +101,12 @@ class Currency implements Comparable<Currency> {
     return powCurrency;
   }
 
-  Currency ceil() {
+  Currency floor() {
     final newValue = value.trimAfterPoint(place: power);
     return Currency(value: newValue, power: power);
   }
+
+  int _getLengthBeforePointWithoutFirstNumber(double value) => value.toString().split(".")[0].length - 1;
 
   @override
   bool operator ==(Object other) => other is Currency && power == other.power && value == other.value;
