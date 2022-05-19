@@ -27,7 +27,7 @@ class MainScreenMenu extends StatelessWidget {
         PositionedButton(
             bottom: 16,
             left: 16,
-            onTap: () {},
+            onTap: () => _navigation.goToFight(context),
             child: Row(
               children: [
                 const Text(
@@ -62,7 +62,7 @@ class MainScreenMenu extends StatelessWidget {
         PositionedButton(
             bottom: 16,
             right: 16 + 32 + 16 + 16 + 32 + 16 + 16,
-            onTap: () => _navigation.shopClicked(context),
+            onTap: () => _navigation.goToPropertyShop(context),
             child: Image.asset(
               "assets/images/shop.png",
               height: 32,

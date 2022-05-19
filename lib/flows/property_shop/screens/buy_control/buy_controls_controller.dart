@@ -7,15 +7,15 @@ import 'package:mobx/mobx.dart';
 part 'buy_controls_controller.g.dart';
 
 @injectable
-class BuyControlsController = BuyControlsControllerBase with _$BuyControlsController;
+class BuyControlsController = _BuyControlsControllerBase with _$BuyControlsController;
 
-abstract class BuyControlsControllerBase with Store {
+abstract class _BuyControlsControllerBase with Store {
   final ChangeBuyAmountUseCase _changeBuyAmountUseCase;
 
   @observable
   BuyAmount selected = BuyAmount.one;
 
-  BuyControlsControllerBase(this._changeBuyAmountUseCase);
+  _BuyControlsControllerBase(this._changeBuyAmountUseCase);
 
   Future<void> setSelected(BuyAmount control) async {
     try {

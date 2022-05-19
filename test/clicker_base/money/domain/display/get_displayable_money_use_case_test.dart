@@ -8,7 +8,7 @@ import '../../../../testUtils/expect_throw.dart';
 import '../../../../testUtils/mocks.mocks.dart';
 
 void main() {
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
   });
   final mock = MockMoneyService();

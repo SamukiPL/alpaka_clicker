@@ -34,7 +34,7 @@ void main() {
   final _propertiesService = MockPropertiesService();
   final _storeClerc = MockStoreClerc();
   final _toPropertyModelMapper = MockToPropertyModelMapper();
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
   });
 

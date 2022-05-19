@@ -9,7 +9,7 @@ import '../../../testUtils/mocked_models.dart';
 import '../../../testUtils/mocks.mocks.dart';
 
 void main() {
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
   });
   final buyingService = MockBuyingService();

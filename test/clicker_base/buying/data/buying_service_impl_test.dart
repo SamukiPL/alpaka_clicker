@@ -11,7 +11,7 @@ import '../../../testUtils/mocks.mocks.dart';
 void main() {
   final propertiesService = MockPropertiesService();
   final propertyOffer = emptyPropertyOffer();
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
     when(propertiesService.increasePropertyCount(any)).thenAnswer((realInvocation) => Future.value());
   });
