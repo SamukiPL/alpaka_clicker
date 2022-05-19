@@ -9,7 +9,7 @@ import '../../../../testUtils/mocks.mocks.dart';
 void main() {
   final bank = MockBank();
   final beautifier = MockCurrencyBeautifier();
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
   });
 

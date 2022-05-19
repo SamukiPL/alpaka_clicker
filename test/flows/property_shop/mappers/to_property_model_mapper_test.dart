@@ -18,7 +18,7 @@ void main() {
   const displayableIncome = "1/s";
 
   final _beautifier = MockCurrencyBeautifier();
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
     when(_beautifier.beautifyCurrency(any)).thenReturn(displayablePrice);
     when(_beautifier.beautifyCurrencyPerSecond(any)).thenReturn(displayableIncome);

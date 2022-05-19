@@ -7,7 +7,7 @@ import '../../../../testUtils/mocks.mocks.dart';
 
 void main() {
   final changeBuyAmountUseCase = MockChangeBuyAmountUseCase();
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
     when(changeBuyAmountUseCase(any)).thenAnswer((realInvocation) => Future.value());
   });

@@ -3,9 +3,9 @@ import 'package:mobx/mobx.dart';
 
 part 'splash_screen_controller.g.dart';
 
-class SplashScreenController = SplashScreenControllerBase with _$SplashScreenController;
+class SplashScreenController = _SplashScreenControllerBase with _$SplashScreenController;
 
-abstract class SplashScreenControllerBase with Store {
+abstract class _SplashScreenControllerBase with Store {
   @observable
   bool dependenciesLoaded = false;
 

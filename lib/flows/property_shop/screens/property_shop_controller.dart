@@ -11,16 +11,16 @@ import 'package:mobx/mobx.dart';
 part 'property_shop_controller.g.dart';
 
 @injectable
-class PropertyShopController = PropertyShopControllerBase with _$PropertyShopController;
+class PropertyShopController = _PropertyShopControllerBase with _$PropertyShopController;
 
-abstract class PropertyShopControllerBase with Store {
+abstract class _PropertyShopControllerBase with Store {
   final GetOffersUseCase _offersUseCase;
   final BuyPropertyUseCase _buyPropertyUseCase;
   final GetDisplayableInterestPerSecondUseCase _interestPerSecondUseCase;
 
   late final StreamSubscription _offersSubscription;
 
-  PropertyShopControllerBase(this._offersUseCase, this._buyPropertyUseCase, this._interestPerSecondUseCase);
+  _PropertyShopControllerBase(this._offersUseCase, this._buyPropertyUseCase, this._interestPerSecondUseCase);
 
   @observable
   List<PropertyModel> models = List.empty();

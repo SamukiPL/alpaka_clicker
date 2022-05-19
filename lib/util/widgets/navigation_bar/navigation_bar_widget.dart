@@ -1,11 +1,7 @@
-import 'package:alpaka_clicker/util/widgets/navigation_bar/navigation_bar_listener.dart';
 import 'package:alpaka_clicker/util/widgets/navigation_bar/navigation_bar_paint.dart';
 import 'package:flutter/material.dart';
 
 class NavigationBarWidget extends StatelessWidget {
-  final NavigationBarListener listener;
-
-  const NavigationBarWidget({Key? key, required this.listener}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +19,13 @@ class NavigationBarWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildImage("assets/images/shop.png", () => listener.shopClicked(context)),
+            buildImage("assets/images/shop.png", () {}),
             getDivider(),
-            buildImage("assets/images/upgrades.png", () => listener.upgradesClicked(context)),
+            buildImage("assets/images/upgrades.png", () {}),
             getDivider(),
-            buildImage("assets/images/clothing.png", () => listener.clothingClicked(context)),
+            buildImage("assets/images/clothing.png", () {}),
             getDivider(),
-            buildImage("assets/images/gear.png", () => listener.settingsClicked(context)),
+            buildImage("assets/images/gear.png", () {}),
           ],
         ),
       )

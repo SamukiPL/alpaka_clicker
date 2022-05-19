@@ -7,12 +7,12 @@ import 'package:mobx/mobx.dart';
 part 'money_counter_controller.g.dart';
 
 @singleton
-class MoneyCounterController = MoneyCounterControllerBase with _$MoneyCounterController;
+class MoneyCounterController = _MoneyCounterControllerBase with _$MoneyCounterController;
 
-abstract class MoneyCounterControllerBase with Store {
+abstract class _MoneyCounterControllerBase with Store {
   final GetDisplayableMoneyUseCase _displayableMoneyUseCase;
 
-  MoneyCounterControllerBase(this._displayableMoneyUseCase);
+  _MoneyCounterControllerBase(this._displayableMoneyUseCase);
 
   late StreamSubscription _moneyDisplaySubscription;
 

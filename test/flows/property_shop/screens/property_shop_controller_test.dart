@@ -16,7 +16,7 @@ void main() {
   final getOffersUseCase = MockGetOffersUseCase();
   final buyPropertyUseCase = MockBuyPropertyUseCase();
   final interestPerSecondUseCase = MockGetDisplayableInterestPerSecondUseCase();
-  setUp(() {
+  setUpAll(() {
     resetMockitoState();
     when(interestPerSecondUseCase()).thenAnswer((realInvocation) => Future.value(Result.success("")));
   });

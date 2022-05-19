@@ -1,7 +1,11 @@
+import 'package:alpaka_clicker/character_base/attributes.dart';
+import 'package:alpaka_clicker/character_base/character.dart';
+import 'package:alpaka_clicker/character_base/character_level.dart';
 import 'package:alpaka_clicker/clicker_base/money/bank.dart';
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
+import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
 
 Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
@@ -28,7 +32,12 @@ PropertyOffer emptyPropertyOffer() =>
     PropertyOffer(key: "", count: 1, price: emptyCurrency(), interest: emptyCurrency());
 
 PropertyModel emptyPropertyModel() => PropertyModel(
-    name: "", displayablePrice: "", displayableIncome: "", propertyCount: 0, canBuy: false, offer: emptyPropertyOffer());
+    name: "",
+    displayablePrice: "",
+    displayableIncome: "",
+    propertyCount: 0,
+    canBuy: false,
+    offer: emptyPropertyOffer());
 
 PropertyModel propertyModel(
         {String name = "",
@@ -44,3 +53,14 @@ PropertyModel propertyModel(
         propertyCount: count,
         canBuy: canBuy,
         offer: offer ?? emptyPropertyOffer());
+
+Character emptyCharacter() {
+  final characterLevel = CharacterLevel(level: 1, experienceStrategy: 1, experience: 1);
+  final rock = Rock(1, Grade.a);
+  final paper = Paper(1, Grade.s);
+  final scissors = Scissors(1, Grade.d);
+  final knowledge = Knowledge(1, Grade.f);
+  return Character("Test", characterLevel, rock, paper, scissors, knowledge);
+}
+
+Probability emptyProbability() => Probability(1, {});
