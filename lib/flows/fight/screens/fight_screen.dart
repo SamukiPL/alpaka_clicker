@@ -27,6 +27,7 @@ class FightScreen extends StatelessWidget {
     return DisposableWidget(
       dispose: () {
         disposer.reaction.dispose();
+        _controller.dispose();
       },
       child: Scaffold(
         appBar: MoneyCounterToolbar(),
@@ -40,7 +41,7 @@ class FightScreen extends StatelessWidget {
             Observer(builder: (_) => HealthBar(playerHealth: _controller.playerHealth, enemyHealth: _controller.enemyHealth)),
             const Divider(thickness: 2, height: 2, color: BaseColors.primary),
             Expanded(
-              child: Observer(builder: (_) => FightLogWidget(testKey: listKey, logs: _controller.logs)),
+              child: Observer(builder: (_) => FightLogWidget(listKey: listKey, logs: _controller.logs)),
             ),
             Container(
               width: double.infinity,

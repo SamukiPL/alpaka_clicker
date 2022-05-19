@@ -79,7 +79,9 @@ class FightDirector {
     giveDamageToCorrectFighter(type, damage);
     return TurnResult(
         type: type,
+        attackerName: attacker.name,
         attackAttribute: attackerAttributeTag,
+        defenderName: defender.name,
         defendAttribute: defenderAttributeTag,
         damageDealt: damage,
         playerHealth: healthCalculator.calculateHealth(damageTaken: _playerDamageTaken, fullHealth: fullHealth),

@@ -4,16 +4,17 @@ import 'package:flutter/widgets.dart';
 
 class FightLogWidget extends StatelessWidget {
   final List<LogModel> logs;
-  final Key testKey;
+  final GlobalKey<AnimatedListState> listKey;
 
-  const FightLogWidget({Key? key, required this.testKey, required this.logs}) : super(key: key);
+  const FightLogWidget({Key? key, required this.listKey, required this.logs}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnimatedList(
-        key: testKey,
+        key: listKey,
         initialItemCount: 0,
         reverse: true,
+        shrinkWrap: true,
         itemBuilder: (context, position, animation) {
           return SizeTransition(
             sizeFactor: animation,

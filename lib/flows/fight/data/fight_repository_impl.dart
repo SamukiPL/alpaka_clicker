@@ -9,7 +9,7 @@ import 'package:alpaka_clicker/flows/fight/mappers/turn_result_to_log_message_ma
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@Injectable(as: FightRepository)
+@Singleton(as: FightRepository)
 class FightRepositoryImpl implements FightRepository {
   final FightDirector fightDirector;
   final TurnResultToLogMessageMapper logMessageMapper;
@@ -33,7 +33,7 @@ class FightRepositoryImpl implements FightRepository {
   @override
   Future<void> makeTurn() async {
     final result = fightDirector.makeTurn();
-    logs.insert(0, LogModel(text: "${result.type} give ${result.damageDealt}", logPerson: result.type));
+    logs.insert(0, logMessageMapper.call(result));
     final details = FightDetailsModel(result.playerHealth, result.enemyHealth, logs);
     _detailsSubject.add(details);
   }

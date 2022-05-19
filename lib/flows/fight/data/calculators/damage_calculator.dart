@@ -1,16 +1,18 @@
+import 'dart:math';
+
 import 'package:alpaka_clicker/character_base/attributes.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class DamageCalculator {
-  int damagePerLevel = 10;
-  int blockPerLevel = 5;
+  int damagePerLevel = 50;
+  int blockPerLevel = 25;
 
   int calculateDamage(Attribute attackerAtt, Attribute defenderAtt) {
     final strengthFactor = attributeStrengthFactor(attackerAtt, defenderAtt.tag);
     final attackerDamage = (attackerAtt.level * damagePerLevel * strengthFactor).ceil();
     final defenderBlock = (defenderAtt.level * blockPerLevel).ceil();
-    return attackerDamage - defenderBlock;
+    return max(attackerDamage - defenderBlock, 0);
   }
 
   double attributeStrengthFactor(Attribute attackerAtt, AttributeTag defenderTag) {
