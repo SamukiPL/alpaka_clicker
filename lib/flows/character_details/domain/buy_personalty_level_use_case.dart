@@ -1,10 +1,10 @@
 import 'package:alpaka_clicker/character_base/personalty/models/personalty_offer.dart';
-import 'package:alpaka_clicker/flows/character_details/domain/character_details_repository.dart';
+import 'package:alpaka_clicker/clicker_base/buying/domain/buying_service.dart';
 
 class BuyPersonaltyLevelUseCase {
-  final CharacterDetailsRepository _repository;
+  final BuyingService _buyingService;
 
-  BuyPersonaltyLevelUseCase(this._repository);
+  BuyPersonaltyLevelUseCase(this._buyingService);
 
-  Future<void> call(PersonaltyOffer offer) => _repository.buyPersonalityLevel(offer);
+  Future<void> call(PersonaltyOffer offer) => _buyingService.buyPersonalty(offer);
 }

@@ -1,3 +1,4 @@
+import 'package:alpaka_clicker/character_base/personalty/models/personalty_offer.dart';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buying_service.dart';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buying_state.dart';
 import 'package:alpaka_clicker/clicker_base/money/bank.dart';
@@ -32,5 +33,11 @@ class BuyingServiceImpl extends BuyingService {
       Logger.root.severe("BuyingServiceImpl", error);
       return (error is Exception) ? Result.failure(error) : throw error;
     });
+  }
+
+  @override
+  Future<Result<BuyingState>> buyPersonalty(PersonaltyOffer offer) {
+    // TODO: implement buyPersonalty
+    throw UnimplementedError();
   }
 }
