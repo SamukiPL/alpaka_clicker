@@ -1,6 +1,6 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 import 'package:alpaka_clicker/flows/fight/data/fight_director.dart';
 import 'package:alpaka_clicker/flows/fight/domain/fight_repository.dart';
 import 'package:alpaka_clicker/flows/fight/domain/models/fight_details_model.dart';
@@ -17,7 +17,7 @@ class FightRepositoryImpl implements FightRepository {
   FightRepositoryImpl(this.fightDirector, this.logMessageMapper) {
     fightDirector.startWithNewEnemy(Character(
         "Papajak",
-        CharacterLevel(level: 16, experience: 1, experienceStrategy: 1252),
+        InGameLevel(level: 16, experience: 1, experienceStrategy: 1252),
         Rock(5, Grade.a),
         Paper(2, Grade.b),
         Scissors(4, Grade.s),

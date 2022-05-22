@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/character_base/character.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/damage_calculator.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/dice_roller.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/health_calculator.dart';

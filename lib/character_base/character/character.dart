@@ -1,9 +1,9 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 
 class Character {
   final String name;
-  CharacterLevel _level;
+  InGameLevel _level;
   Rock _rock;
   Paper _paper;
   Scissors _scissors;

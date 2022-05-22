@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/flows/fight/data/turn_result.dart';
 import 'package:alpaka_clicker/flows/fight/domain/models/log_model.dart';
 import 'package:injectable/injectable.dart';

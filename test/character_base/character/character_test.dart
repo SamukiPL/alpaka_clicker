@@ -1,10 +1,10 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final level = CharacterLevel(level: 1, experience: 0, experienceStrategy: 100);
+  final level = InGameLevel(level: 1, experience: 0, experienceStrategy: 100);
   const startLevel = 1;
   final rock = Rock(startLevel, Grade.s);
   final paper = Paper(startLevel, Grade.a);

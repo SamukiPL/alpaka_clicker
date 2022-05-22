@@ -11,7 +11,7 @@ class PropertiesServiceImpl implements PropertiesService {
   late final BehaviorSubject<List<Property>> _displaySubject = BehaviorSubject.seeded(_properties);
 
   @override
-  List<Property> getProperties() => _properties;
+  List<Property> get properties => _properties.toList();
 
   @override
   Stream<List<Property>> listenToProperties() => _displaySubject.stream;
@@ -19,7 +19,7 @@ class PropertiesServiceImpl implements PropertiesService {
   @override
   Future<void> increasePropertyCount(PropertyOffer offer) async {
     _properties.firstWhere((property) => property.key == offer.key).addPurchased(offer.count);
-    _displaySubject.add(_properties);
+    _displaySubject.add(properties);
   }
 
   @override

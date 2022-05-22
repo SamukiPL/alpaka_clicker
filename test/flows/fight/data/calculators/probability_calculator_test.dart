@@ -1,6 +1,6 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/probability_calculator.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,7 +54,7 @@ void main() {
     final scissors = Scissors(1, Grade.b); //25 + 15 + paper = scissors
     final knowledge = Knowledge(1, Grade.c); //25 + 5 + scissors
     final character = Character(
-        "Test", CharacterLevel(level: 1, experience: 1, experienceStrategy: 100), rock, paper, scissors, knowledge);
+        "Test", InGameLevel(level: 1, experience: 1, experienceStrategy: 100), rock, paper, scissors, knowledge);
     final underTest = ProbabilityCalculator();
     Probability returned = underTest.calculateProbability(character);
     // ignore: unnecessary_type_check
@@ -78,7 +78,7 @@ void main() {
     final scissors = Scissors(1, Grade.e); //25 - 15
     final knowledge = Knowledge(1, Grade.f); //25 - 24
     final character = Character(
-        "Test", CharacterLevel(level: 1, experience: 1, experienceStrategy: 100), rock, paper, scissors, knowledge);
+        "Test", InGameLevel(level: 1, experience: 1, experienceStrategy: 100), rock, paper, scissors, knowledge);
     final underTest = ProbabilityCalculator();
     Probability returned = underTest.calculateProbability(character);
     expect(returned.probSum, (25 * 4) + 30 - 5 - 15 - 24);

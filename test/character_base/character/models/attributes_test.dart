@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class TestAttribute extends Attribute {

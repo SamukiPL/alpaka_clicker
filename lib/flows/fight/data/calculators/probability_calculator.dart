@@ -1,5 +1,5 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
 import 'package:injectable/injectable.dart';
 
