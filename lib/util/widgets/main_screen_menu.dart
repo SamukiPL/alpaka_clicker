@@ -53,7 +53,7 @@ class MainScreenMenu extends StatelessWidget {
         PositionedButton(
             bottom: 16,
             right: 16 + 32 + 16 + 16,
-            onTap: () {},
+            onTap: () => _navigation.goToCharacterDetails(context),
             child: Image.asset(
               "assets/images/upgrades.png",
               height: 32,
