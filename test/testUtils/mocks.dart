@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:alpaka_clicker/character_base/character/data/character_generator.dart';
+import 'package:alpaka_clicker/character_base/character/domain/character_service.dart';
+import 'package:alpaka_clicker/character_base/personalty/domain/personalties_service.dart';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buy_property_use_case.dart';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buying_service.dart';
 import 'package:alpaka_clicker/clicker_base/money/bank.dart';
@@ -7,6 +10,7 @@ import 'package:alpaka_clicker/clicker_base/money/currency_beautifier.dart';
 import 'package:alpaka_clicker/clicker_base/money/domain/get_displayable_interest_per_second_use_case.dart';
 import 'package:alpaka_clicker/clicker_base/money/domain/money_service.dart';
 import 'package:alpaka_clicker/clicker_base/property/domain/properties_service.dart';
+import 'package:alpaka_clicker/flows/character_details/domain/character_details_repository.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/damage_calculator.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/dice_roller.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/health_calculator.dart';
@@ -37,6 +41,10 @@ import 'package:mockito/annotations.dart';
   HealthCalculator,
   ProbabilityCalculator,
   FightDirector,
-  Random
+  Random,
+  CharacterDetailsRepository,
+  PersonaltiesService,
+  CharacterGenerator,
+  CharacterService,
 ])
 void main() {}
