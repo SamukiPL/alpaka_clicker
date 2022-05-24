@@ -1,5 +1,5 @@
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
-import 'package:alpaka_clicker/flows/property_shop/data/store_clerc.dart';
+import 'package:alpaka_clicker/clicker_base/money/data/store_clerc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../testUtils/mocked_models.dart';

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
-import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
+import 'package:alpaka_clicker/clicker_base/money/domain/models/offer.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -18,7 +18,7 @@ class StoreClerc {
     return changedSize > 0;
   }
 
-  void updateCurrentOffers(Iterable<PropertyOffer> offers, Currency moneyOwned) {
+  void updateCurrentOffers(Iterable<Offer> offers, Currency moneyOwned) {
     final sortedOffers = offers.map((e) => e.price).takeWhile((price) => price > moneyOwned).toList()..sort();
     _prices.clear();
     _prices.addAll(sortedOffers);
