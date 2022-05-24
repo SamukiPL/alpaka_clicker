@@ -1,8 +1,10 @@
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
+import 'package:alpaka_clicker/clicker_base/money/domain/models/offer.dart';
 
-class PropertyOffer {
+class PropertyOffer implements Offer {
   final String key;
   final int count;
+  @override
   final Currency price;
   final Currency interest;
 

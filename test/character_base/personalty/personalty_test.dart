@@ -1,6 +1,8 @@
 import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
+import 'package:alpaka_clicker/character_base/personalty/models/personalty_offer.dart';
 import 'package:alpaka_clicker/character_base/personalty/personalty.dart';
+import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../testUtils/mocked_models.dart';
@@ -53,5 +55,14 @@ void main() {
     final underTest = Personalty("key", "test", level, 0, AttributeTag.rock);
     underTest.addExperience(nextLevel);
     expect(underTest.level, startingLevel + 1);
+  });
+
+  test("Personalty generates offer for itself", () {
+    const nextLevel = 100;
+    final level = InGameLevel(level: 0, experience: 0, experienceStrategy: nextLevel);
+    final underTest = Personalty("key", "test", level, 0, AttributeTag.rock);
+    PersonaltyOffer offer = underTest.getOffer();
+    expect(offer.key, underTest.key);
+    expect(offer.price, Currency(value: 1, power: underTest.basePricePower));
   });
 }

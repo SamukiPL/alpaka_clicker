@@ -9,6 +9,7 @@ class PersonaltyModel {
   final Grade attributeGrade;
   final Pair<int, int> attributeRange;
   final PersonaltyOffer offer;
+  final bool canBuy;
 
-  PersonaltyModel(this.name, this.currentLevel, this.attributeTag, this.attributeGrade, this.attributeRange, this.offer);
+  PersonaltyModel(this.name, this.currentLevel, this.attributeTag, this.attributeGrade, this.attributeRange, this.offer, this.canBuy);
 }

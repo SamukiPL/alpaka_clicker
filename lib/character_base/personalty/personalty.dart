@@ -1,5 +1,6 @@
 import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
+import 'package:alpaka_clicker/character_base/personalty/models/personalty_offer.dart';
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 
 class Personalty {
@@ -24,4 +25,6 @@ class Personalty {
   void addExperience(int newExperience) {
     _level += newExperience;
   }
+
+  PersonaltyOffer getOffer() => PersonaltyOffer(key, price);
 }

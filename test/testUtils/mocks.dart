@@ -11,12 +11,14 @@ import 'package:alpaka_clicker/clicker_base/money/domain/get_displayable_interes
 import 'package:alpaka_clicker/clicker_base/money/domain/money_service.dart';
 import 'package:alpaka_clicker/clicker_base/property/domain/properties_service.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/character_details_repository.dart';
+import 'package:alpaka_clicker/flows/character_details/mappers/character_to_character_info_mapper.dart';
+import 'package:alpaka_clicker/flows/character_details/mappers/to_personalty_model_mapper.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/damage_calculator.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/dice_roller.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/health_calculator.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/probability_calculator.dart';
 import 'package:alpaka_clicker/flows/fight/data/fight_director.dart';
-import 'package:alpaka_clicker/flows/property_shop/data/store_clerc.dart';
+import 'package:alpaka_clicker/clicker_base/money/data/store_clerc.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/change_buy_amount_use_case.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/get_offers_use_case.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/properties_repository.dart';
@@ -46,5 +48,7 @@ import 'package:mockito/annotations.dart';
   PersonaltiesService,
   CharacterGenerator,
   CharacterService,
+  CharacterToCharacterInfoMapper,
+  ToPersonaltyModelMapper,
 ])
 void main() {}
