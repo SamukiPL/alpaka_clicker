@@ -14,7 +14,6 @@ import 'package:alpaka_clicker/util/monad/result.dart';
 import 'package:alpaka_clicker/util/pair.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart/streams.dart';
 
 @Singleton(as: CharacterDetailsRepository)
 class CharacterDetailsRepositoryImpl implements CharacterDetailsRepository {
@@ -67,7 +66,7 @@ class CharacterDetailsRepositoryImpl implements CharacterDetailsRepository {
       }).onErrorReturnWith((error, stackTrace) => (error is Exception) ? Result.failure(error) : throw error);
 
   @override
-  Future<void> levelUpAttribute(AttributeTag tag) {
+  Future<Result<void>> levelUpAttribute(AttributeTag tag) {
     // TODO: implement levelUpAttribute
     throw UnimplementedError();
   }

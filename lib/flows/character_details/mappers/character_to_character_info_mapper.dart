@@ -11,14 +11,15 @@ class CharacterToCharacterInfoMapper {
         character.level,
         character.experience,
         character.experienceStrategy,
+        character.pointsToDistribute > 0,
         character.pointsToDistribute,
         attributesToModels(character),
       );
 
   List<AttributeModel> attributesToModels(Character character) => [
-    AttributeModel(AttributeTag.rock, character.rockLevel, character.rockGrade),
-    AttributeModel(AttributeTag.paper, character.paperLevel, character.paperGrade),
-    AttributeModel(AttributeTag.scissors, character.scissorsLevel, character.scissorsGrade),
-    AttributeModel(AttributeTag.knowledge, character.knowledgeLevel, character.knowledgeGrade),
-  ];
+        AttributeModel(AttributeTag.rock, character.rockLevel, character.rockGrade),
+        AttributeModel(AttributeTag.paper, character.paperLevel, character.paperGrade),
+        AttributeModel(AttributeTag.scissors, character.scissorsLevel, character.scissorsGrade),
+        AttributeModel(AttributeTag.knowledge, character.knowledgeLevel, character.knowledgeGrade),
+      ];
 }

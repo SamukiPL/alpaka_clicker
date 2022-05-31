@@ -8,5 +8,5 @@ abstract class CharacterDetailsRepository {
 
   Stream<Result<List<PersonaltyModel>>> getPersonaltiesList();
 
-  Future<void> levelUpAttribute(AttributeTag tag);
+  Future<Result<void>> levelUpAttribute(AttributeTag tag);
 }

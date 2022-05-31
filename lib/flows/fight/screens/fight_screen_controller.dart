@@ -46,6 +46,7 @@ abstract class _FightScreenControllerBase with Store {
 
   bool testing = true;
 
+  @action
   Future<void> test() async {
     Future.doWhile(() async {
       await Future.delayed(const Duration(seconds: 3));

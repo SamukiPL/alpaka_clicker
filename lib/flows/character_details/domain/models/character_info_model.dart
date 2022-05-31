@@ -5,9 +5,10 @@ class CharacterInfoModel {
   final int currentLevel;
   final int currentExperience;
   final int experienceToNextLevel;
+  final bool canDistributePoints;
   final int pointsToDistribute;
   final List<AttributeModel> attributes;
 
   CharacterInfoModel(this.name, this.currentLevel, this.currentExperience, this.experienceToNextLevel,
-      this.pointsToDistribute, this.attributes);
+      this.canDistributePoints, this.pointsToDistribute, this.attributes);
 }
