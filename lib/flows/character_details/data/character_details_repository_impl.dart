@@ -7,9 +7,11 @@ import 'package:alpaka_clicker/clicker_base/money/data/store_clerc.dart';
 import 'package:alpaka_clicker/clicker_base/money/domain/money_service.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/character_details_repository.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/models/character_info_model.dart';
+import 'package:alpaka_clicker/flows/character_details/domain/models/level_up_status.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/models/personalty_model.dart';
 import 'package:alpaka_clicker/flows/character_details/mappers/character_to_character_info_mapper.dart';
 import 'package:alpaka_clicker/flows/character_details/mappers/to_personalty_model_mapper.dart';
+import 'package:alpaka_clicker/util/exceptions/character_exceptions.dart';
 import 'package:alpaka_clicker/util/monad/result.dart';
 import 'package:alpaka_clicker/util/pair.dart';
 import 'package:injectable/injectable.dart';
@@ -66,8 +68,14 @@ class CharacterDetailsRepositoryImpl implements CharacterDetailsRepository {
       }).onErrorReturnWith((error, stackTrace) => (error is Exception) ? Result.failure(error) : throw error);
 
   @override
-  Future<Result<void>> levelUpAttribute(AttributeTag tag) {
-    // TODO: implement levelUpAttribute
-    throw UnimplementedError();
+  Future<Result<LevelUpStatus>> levelUpAttribute(AttributeTag tag) async {
+    try {
+      _characterService.levelUp(tag);
+      return Result.success(LevelUpStatus.levelUp);
+    } on NoMorePointToLevelUpAttributeException catch (_) {
+      return Result.success(LevelUpStatus.noMorePoints);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
 }

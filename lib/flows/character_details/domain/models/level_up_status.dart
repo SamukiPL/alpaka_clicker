@@ -1,0 +1,3 @@
+enum LevelUpStatus {
+  noMorePoints, levelUp
+}

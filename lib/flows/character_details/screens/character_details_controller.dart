@@ -7,6 +7,7 @@ import 'package:alpaka_clicker/flows/character_details/domain/get_personalties_u
 import 'package:alpaka_clicker/flows/character_details/domain/level_up_attribute_use_case.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/models/attribute_model.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/models/character_info_model.dart';
+import 'package:alpaka_clicker/flows/character_details/domain/models/level_up_status.dart';
 import 'package:alpaka_clicker/flows/character_details/domain/models/personalty_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -57,8 +58,15 @@ abstract class _CharacterDetailsControllerBase with Store {
 
   Future<void> levelUpAttribute(AttributeModel attribute) async {
     final result = await _levelUpAttributeUseCase(attribute.tag);
-    result.onSuccess((value) {
-      _getCharacterInfo();
+    result.onSuccess((value) async {
+      switch (value) {
+        case LevelUpStatus.noMorePoints:
+          //TODO handle success and error for better UX
+          break;
+        case LevelUpStatus.levelUp:
+          await _getCharacterInfo();
+          break;
+      }
     });
   }
 

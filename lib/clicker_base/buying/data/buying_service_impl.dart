@@ -1,3 +1,4 @@
+import 'package:alpaka_clicker/character_base/personalty/domain/personalties_service.dart';
 import 'package:alpaka_clicker/character_base/personalty/models/personalty_offer.dart';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buying_service.dart';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buying_state.dart';
@@ -13,8 +14,9 @@ import 'package:logging/logging.dart';
 class BuyingServiceImpl extends BuyingService {
   final Bank _bank;
   final PropertiesService _propertiesService;
+  final PersonaltiesService _personaltiesService;
 
-  BuyingServiceImpl(this._bank, this._propertiesService);
+  BuyingServiceImpl(this._bank, this._propertiesService, this._personaltiesService);
 
   @override
   Future<Result<BuyingState>> buyProperty(PropertyOffer offer) async {
@@ -37,7 +39,19 @@ class BuyingServiceImpl extends BuyingService {
 
   @override
   Future<Result<BuyingState>> buyPersonalty(PersonaltyOffer offer) {
-    // TODO: implement buyPersonalty
-    throw UnimplementedError();
+    return Future(() {
+      return _bank.spendMoney(offer.price, successReaction: () async {
+        await _personaltiesService.buyPersonaltyLevel(offer);
+      });
+    }).then((state) {
+      if (state == SpendMoneyState.success) {
+        return Result.success(BuyingState.bought);
+      } else {
+        return Result.success(BuyingState.notBought);
+      }
+    }).onError((Object error, stackTrace) {
+      Logger.root.severe("BuyingServiceImpl", error);
+      return (error is Exception) ? Result.failure(error) : throw error;
+    });
   }
 }
