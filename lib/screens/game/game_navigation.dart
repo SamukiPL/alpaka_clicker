@@ -1,3 +1,4 @@
+import 'package:alpaka_clicker/flows/character_details/screens/character_details_screen.dart';
 import 'package:alpaka_clicker/flows/fight/screens/fight_screen.dart';
 import 'package:alpaka_clicker/flows/property_shop/screens/property_shop_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +23,7 @@ class GameNavigation {
     Navigator.push(context, MaterialPageRoute(builder: (_) => PropertyShopScreen()));
   }
 
-  void goToUpgrades(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => throw UnimplementedError()));
+  void goToCharacterDetails(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => CharacterDetailsScreen()));
   }
 }

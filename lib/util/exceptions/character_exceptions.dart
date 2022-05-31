@@ -1,0 +1,1 @@
+class NoMorePointToLevelUpAttributeException implements Exception {}

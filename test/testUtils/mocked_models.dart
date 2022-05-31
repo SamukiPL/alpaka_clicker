@@ -1,6 +1,6 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 import 'package:alpaka_clicker/clicker_base/money/bank.dart';
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
@@ -55,7 +55,7 @@ PropertyModel propertyModel(
         offer: offer ?? emptyPropertyOffer());
 
 Character emptyCharacter() {
-  final characterLevel = CharacterLevel(level: 1, experienceStrategy: 1, experience: 1);
+  final characterLevel = InGameLevel(level: 1, experienceStrategy: 1, experience: 1);
   final rock = Rock(1, Grade.a);
   final paper = Paper(1, Grade.s);
   final scissors = Scissors(1, Grade.d);
@@ -64,3 +64,5 @@ Character emptyCharacter() {
 }
 
 Probability emptyProbability() => Probability(1, {});
+
+InGameLevel emptyLevel() => InGameLevel(level: 0, experience: 0, experienceStrategy: 1000);

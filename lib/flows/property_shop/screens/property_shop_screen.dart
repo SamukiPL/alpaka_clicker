@@ -84,7 +84,7 @@ class PropertyShopScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8),
           ));
 
-  Widget _propertiesSeparator() => const Divider(
+  Widget _propertiesSeparator() => const Divider(//TODO make a widget
         color: Color(0xFFD5A800),
         thickness: 0.8,
       );

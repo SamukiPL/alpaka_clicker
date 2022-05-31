@@ -4,7 +4,7 @@ import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart'
 class Property {
   final String key;
   final String name;
-  int count;
+  int _count = 0;
   final Currency baseIncrementation;
   final Currency basePrice;
   Currency baseInterest;
@@ -14,13 +14,16 @@ class Property {
   Property({
     required this.key,
     required this.name,
-    required this.count,
+    required int count,
     required this.baseIncrementation,
     required this.basePrice,
     required this.baseInterest,
   }) {
-    _currentIncrementation = baseIncrementation.powByExponent(count);
+    _count = count;
+    _currentIncrementation = baseIncrementation.powByExponent(_count);
   }
+
+  int get count => _count;
 
   PropertyOffer getOffer({int offerCount = 1}) {
     Currency price = basePrice * _currentIncrementation;
@@ -37,7 +40,7 @@ class Property {
   }
 
   void addPurchased(int addend) {
-    count += addend;
+    _count += addend;
     _currentIncrementation *= baseIncrementation.powByExponent(addend);
   }
 

@@ -1,9 +1,13 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'dart:math';
+
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 
 class Character {
+  final int pointsDistributionNormalizer = AttributeTag.values.length - 1;
+
   final String name;
-  CharacterLevel _level;
+  InGameLevel _level;
   Rock _rock;
   Paper _paper;
   Scissors _scissors;
@@ -11,7 +15,9 @@ class Character {
 
   Character(this.name, this._level, this._rock, this._paper, this._scissors, this._knowledge);
 
+  int get level => _level.level;
   int get experience => _level.experience;
+  int get experienceStrategy => _level.experienceStrategy;
 
   int get rockLevel => _rock.level;
   Grade get rockGrade => _rock.grade;
@@ -25,8 +31,11 @@ class Character {
   int get knowledgeLevel => _knowledge.level;
   Grade get knowledgeGrade => _knowledge.grade;
 
+  int get pointsToDistribute =>
+      max((level + pointsDistributionNormalizer) - (rockLevel + paperLevel + scissorsLevel + knowledgeLevel), 0);
+
   Attribute getAttributeByTag(AttributeTag tag) {
-    switch(tag) {
+    switch (tag) {
       case AttributeTag.rock:
         return _rock;
       case AttributeTag.paper:
@@ -49,4 +58,6 @@ class Character {
   void levelUpScissors() => _scissors += 1;
 
   void levelUpKnowledge() => _knowledge += 1;
+
+  Character copy() => Character(name, _level, _rock, _paper, _scissors, _knowledge);
 }

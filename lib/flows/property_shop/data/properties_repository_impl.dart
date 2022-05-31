@@ -2,7 +2,7 @@ import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/money/domain/money_service.dart';
 import 'package:alpaka_clicker/clicker_base/property/domain/properties_service.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
-import 'package:alpaka_clicker/flows/property_shop/data/store_clerc.dart';
+import 'package:alpaka_clicker/clicker_base/money/data/store_clerc.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/buy_amount.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/properties_repository.dart';

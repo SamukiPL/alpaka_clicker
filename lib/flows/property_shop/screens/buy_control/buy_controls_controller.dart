@@ -17,6 +17,7 @@ abstract class _BuyControlsControllerBase with Store {
 
   _BuyControlsControllerBase(this._changeBuyAmountUseCase);
 
+  @action
   Future<void> setSelected(BuyAmount control) async {
     try {
       await _changeBuyAmountUseCase(control);

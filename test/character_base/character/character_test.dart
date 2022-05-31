@@ -1,10 +1,10 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
-import 'package:alpaka_clicker/character_base/character.dart';
-import 'package:alpaka_clicker/character_base/character_level.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final level = CharacterLevel(level: 1, experience: 0, experienceStrategy: 100);
+  final level = InGameLevel(level: 1, experience: 0, experienceStrategy: 100);
   const startLevel = 1;
   final rock = Rock(startLevel, Grade.s);
   final paper = Paper(startLevel, Grade.a);
@@ -21,6 +21,13 @@ void main() {
     expect(character.experience, level.experience);
     character.giveExperience(exp);
     expect(character.experience, level.experience + exp);
+  });
+
+  test("Character can take experience and bump up its level", () {
+    final character = Character("name", level, rock, paper, scissors, knowledge);
+    expect(character.level, level.level);
+    character.giveExperience(level.experienceStrategy);
+    expect(character.level, level.level + 1);
   });
 
   test("Character can upgrade levelUp rock attribute", () {
@@ -89,5 +96,31 @@ void main() {
   test("Character returns its Knowledge attribute after passing AttributeTag.knowledge", () {
     final character = Character("name", level, rock, paper, scissors, knowledge);
     expect(character.getAttributeByTag(AttributeTag.knowledge).runtimeType, Knowledge);
+  });
+
+  test("Character returns how much points you can distribute to attributes", () {
+    final character = Character("name", level, rock, paper, scissors, knowledge);
+    expect(character.pointsToDistribute, 0);
+    character.giveExperience(level.experienceStrategy);
+    expect(character.pointsToDistribute, 1);
+    character.levelUpKnowledge();
+    expect(character.pointsToDistribute, 0);
+  });
+
+  test("Character can be copied", () {
+    final character = Character("name", level, rock, paper, scissors, knowledge);
+    Character copy = character.copy();
+    expect(copy.name, character.name);
+    expect(copy.experience, character.experience);
+    expect(copy.rockLevel, character.rockLevel);
+    expect(copy.rockGrade, character.rockGrade);
+    expect(copy.paperLevel, character.paperLevel);
+    expect(copy.paperGrade, character.paperGrade);
+    expect(copy.scissorsLevel, character.scissorsLevel);
+    expect(copy.scissorsGrade, character.scissorsGrade);
+    expect(copy.knowledgeLevel, character.knowledgeLevel);
+    expect(copy.knowledgeGrade, character.knowledgeGrade);
+    character.levelUpRock();
+    expect(character.rockLevel, copy.rockLevel + 1);
   });
 }

@@ -1,4 +1,4 @@
-import 'package:alpaka_clicker/character_base/attributes.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/dice_roller.dart';
 import 'package:flutter_test/flutter_test.dart';
