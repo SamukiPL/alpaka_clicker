@@ -8,8 +8,10 @@ class PersonaltyModel {
   final AttributeTag attributeTag;
   final Grade attributeGrade;
   final Pair<int, int> attributeRange;
+  final String displayablePrice;
   final PersonaltyOffer offer;
   final bool canBuy;
 
-  PersonaltyModel(this.name, this.currentLevel, this.attributeTag, this.attributeGrade, this.attributeRange, this.offer, this.canBuy);
+  PersonaltyModel(this.name, this.currentLevel, this.attributeTag, this.attributeGrade, this.attributeRange,
+      this.displayablePrice, this.offer, this.canBuy);
 }

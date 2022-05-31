@@ -35,6 +35,8 @@ class CharacterDetailsRepositoryImpl implements CharacterDetailsRepository {
     this._personaltyModelMapper,
   );
 
+  bool _refreshOffers = true;
+
   @override
   Future<CharacterInfoModel> getCharacterInfo() async {
     final character = _characterService.playerCharacter;
@@ -44,13 +46,17 @@ class CharacterDetailsRepositoryImpl implements CharacterDetailsRepository {
   @override
   Stream<Result<List<PersonaltyModel>>> getPersonaltiesList() => CombineLatestStream.combine2(
         _moneyService.getDepositedMoney(),
-        _personaltiesService.listenToPersonalties(),
+        _personaltiesService.listenToPersonalties().doOnEach((notification) {
+          _refreshOffers = true;
+        }),
         (Currency a, List<Personalty> b) => Pair(a, b),
       )
           .distinct(
-        (previous, next) => !(_storeClerc.canAffordNewItem(next.first)),
+        (previous, next) => !(_storeClerc.canAffordNewItem(next.first) || _refreshOffers),
       )
-          .map((pair) {
+          .doOnData((pair) {
+        _refreshOffers = false;
+      }).map((pair) {
         final character = _characterService.playerCharacter;
         final money = pair.first;
         final personalties = pair.last;

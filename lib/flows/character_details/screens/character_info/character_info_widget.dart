@@ -40,20 +40,20 @@ class CharacterInfoWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Papajak Watykaniak",
+                        infoModel.name,
                         style: defaultTextStyle(24),
                         maxLines: 2,
                       ),
                       const SizedBox(height: 4,),
                       Text(
-                        "Poziom 2137",
+                        "Poziom ${infoModel.currentLevel}",
                         style: defaultTextStyle(16).copyWith(color: BaseColors.primary.withOpacity(0.6)),
                       ),
                       const SizedBox(height: 8,),
                       RoundedProgressWidget(
                         height: 25,
                         value: 1 / 2,
-                        displayableValue: "${1252~/2}/${infoModel.experienceToNextLevel}",
+                        displayableValue: "${infoModel.currentExperience}/${infoModel.experienceToNextLevel}",
                         backgroundColor: BaseColors.primary.withOpacity(0.2),
                         color: BaseColors.primary,
                       ),

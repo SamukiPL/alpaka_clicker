@@ -41,7 +41,7 @@ abstract class _CharacterDetailsControllerBase with Store {
   Future<void> initialize() async {
     _getCharacterInfo();
     _offersSubscription = _getPersonaltiesUseCase().listen((event) {
-      event.onSuccess((value) => personalties = value);
+      event.onSuccess((value) => _setPersonalties(value));
     });
     isLoading = false;
   }
@@ -49,6 +49,11 @@ abstract class _CharacterDetailsControllerBase with Store {
   @action
   Future<void> _getCharacterInfo() async {
     characterInfoModel = await _characterInfoUseCase();
+  }
+
+  @action
+  void _setPersonalties(List<PersonaltyModel> models) {
+    personalties = models;
   }
 
   Future<void> buyPersonalty(PersonaltyOffer offer) async {

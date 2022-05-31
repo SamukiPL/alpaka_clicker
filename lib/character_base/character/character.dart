@@ -4,7 +4,7 @@ import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
 
 class Character {
-  static final int pointsDistributionNormalizer = AttributeTag.values.length - 1;
+  final int pointsDistributionNormalizer = AttributeTag.values.length - 1;
 
   final String name;
   InGameLevel _level;

@@ -15,7 +15,7 @@ class PersonaltyViewHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 8, bottom: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Column(
         children: [
           Row(
@@ -70,7 +70,7 @@ class PersonaltyViewHolder extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            "1A",
+            model.displayablePrice,
             style: defaultTextStyle(14),
           ),
           Image.asset(
