@@ -5,7 +5,7 @@ import 'package:alpaka_clicker/clicker_base/money/bank.dart';
 import 'package:alpaka_clicker/clicker_base/money/currency.dart';
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
 import 'package:alpaka_clicker/clicker_base/property/property.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
+import 'package:alpaka_clicker/base/randomizer/probability.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
 
 Bank emptyBank() => Bank(emptyCurrency(), emptyCurrency(), emptyCurrency());
@@ -63,6 +63,6 @@ Character emptyCharacter() {
   return Character("Test", characterLevel, rock, paper, scissors, knowledge);
 }
 
-Probability emptyProbability() => Probability(1, {});
+Probability<T> emptyProbability<T>() => Probability<T>(1, {});
 
 InGameLevel emptyLevel() => InGameLevel(level: 0, experience: 0, experienceStrategy: 1000);

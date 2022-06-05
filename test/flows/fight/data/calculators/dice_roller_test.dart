@@ -1,6 +1,6 @@
 import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/dice_roller.dart';
+import 'package:alpaka_clicker/base/randomizer/probability.dart';
+import 'package:alpaka_clicker/base/randomizer/dice_roller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -21,7 +21,7 @@ void main() {
     final random = MockRandom();
     when(random.nextInt(any)).thenReturn(24);
     final underTest = DiceRoller(random);
-    AttributeTag returned = underTest.rollForAttribute(probability);
+    AttributeTag returned = underTest.roll(probability);
     // ignore: unnecessary_type_check
     assert(returned is AttributeTag);
   });
@@ -31,7 +31,7 @@ void main() {
     final underTest = DiceRoller(random);
     when(random.nextInt(any)).thenReturn(24);
 
-    final returned = underTest.rollForAttribute(probability);
+    final returned = underTest.roll(probability);
     expect(returned, AttributeTag.rock);
     verify(random.nextInt(probability.probSum)).called(1);
   });
@@ -41,7 +41,7 @@ void main() {
     final underTest = DiceRoller(random);
     when(random.nextInt(any)).thenReturn(49);
 
-    final returned = underTest.rollForAttribute(probability);
+    final returned = underTest.roll(probability);
     expect(returned, AttributeTag.paper);
     verify(random.nextInt(probability.probSum)).called(1);
   });
@@ -51,7 +51,7 @@ void main() {
     final underTest = DiceRoller(random);
     when(random.nextInt(any)).thenReturn(74);
 
-    final returned = underTest.rollForAttribute(probability);
+    final returned = underTest.roll(probability);
     expect(returned, AttributeTag.scissors);
     verify(random.nextInt(probability.probSum)).called(1);
   });
@@ -61,7 +61,7 @@ void main() {
     final underTest = DiceRoller(random);
     when(random.nextInt(any)).thenReturn(99);
 
-    final returned = underTest.rollForAttribute(probability);
+    final returned = underTest.roll(probability);
     expect(returned, AttributeTag.knowledge);
     verify(random.nextInt(probability.probSum)).called(1);
   });

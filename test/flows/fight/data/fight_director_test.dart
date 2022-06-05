@@ -1,3 +1,4 @@
+import 'package:alpaka_clicker/base/randomizer/probability.dart';
 import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/flows/fight/data/fight_director.dart';
 import 'package:alpaka_clicker/flows/fight/domain/models/health_model.dart';
@@ -5,28 +6,28 @@ import 'package:alpaka_clicker/flows/fight/domain/models/turn_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../testUtils/dummy_mocks.dart';
 import '../../../testUtils/mocked_models.dart';
 import '../../../testUtils/mocks.mocks.dart';
 
 void main() {
   final player = emptyCharacter();
   final enemy = emptyCharacter();
-  final diceRoller = MockDiceRoller();
   final damageCalculator = MockDamageCalculator();
   final healthCalculator = MockHealthCalculator();
-  final probabilityCalculator = MockProbabilityCalculator();
+  final probabilityCalculator = MockAttributeProbabilityCalculator();
   const fullHealth = 10;
 
-  final probability = emptyProbability();
-
   const returnedTag = AttributeTag.rock;
+  final probability = Probability(1, {1: returnedTag});
+
   const damageTaken = 1;
   final returnedHealth = HealthModel(1, "displayableHealth");
+  final diceRoller = MockDiceRoller(dummyReturn: <T>(prob) => prob.attributesProp.values.first);
 
   setUpAll(() {
     resetMockitoState();
     when(probabilityCalculator.calculateProbability(any)).thenReturn(probability);
-    when(diceRoller.rollForAttribute(any)).thenReturn(returnedTag);
     when(damageCalculator.calculateDamage(any, any)).thenReturn(damageTaken);
     when(healthCalculator.calculateHealth(damageTaken: anyNamed("damageTaken"), fullHealth: anyNamed("fullHealth")))
         .thenReturn(returnedHealth);
@@ -48,7 +49,6 @@ void main() {
     expect(returned.enemyHealth.displayableHealth, returnedHealth.displayableHealth);
 
     verify(probabilityCalculator.calculateProbability(any)).called(2);
-    verify(diceRoller.rollForAttribute(any)).called(2);
     verify(damageCalculator.calculateDamage(any, any)).called(1);
     verify(healthCalculator.calculateHealth(damageTaken: anyNamed("damageTaken"), fullHealth: anyNamed("fullHealth")))
         .called(2);

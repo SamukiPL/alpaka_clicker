@@ -1,9 +1,10 @@
 import 'package:alpaka_clicker/character_base/character/character.dart';
+import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
+import 'package:alpaka_clicker/flows/fight/data/calculators/attribute_probability_calculator.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/damage_calculator.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/dice_roller.dart';
+import 'package:alpaka_clicker/base/randomizer/dice_roller.dart';
 import 'package:alpaka_clicker/flows/fight/data/calculators/health_calculator.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/probability_calculator.dart';
+import 'package:alpaka_clicker/base/randomizer/probability.dart';
 import 'package:alpaka_clicker/flows/fight/data/turn_result.dart';
 import 'package:alpaka_clicker/flows/fight/domain/models/turn_type.dart';
 import 'package:injectable/injectable.dart';
@@ -14,7 +15,7 @@ class FightDirector {
   final DiceRoller diceRoller;
   final DamageCalculator damageCalculator;
   final HealthCalculator healthCalculator;
-  final ProbabilityCalculator probabilityCalculator;
+  final AttributeProbabilityCalculator probabilityCalculator;
   final int fullHealth;
 
   FightDirector(
@@ -28,10 +29,10 @@ class FightDirector {
     playerProbability = probabilityCalculator.calculateProbability(player);
   }
 
-  late final Probability playerProbability;
+  late final Probability<AttributeTag> playerProbability;
 
   Character? _enemy;
-  late Probability _enemyProbability;
+  late Probability<AttributeTag> _enemyProbability;
 
   int _round = 0;
 
@@ -70,10 +71,10 @@ class FightDirector {
     return playOutTurn(_enemy!, _enemyProbability, player, playerProbability, TurnType.enemy);
   }
 
-  TurnResult playOutTurn(Character attacker, Probability attackerProbability, Character defender,
+  TurnResult playOutTurn(Character attacker, Probability<AttributeTag> attackerProbability, Character defender,
       Probability defenderProbability, TurnType type) {
-    final attackerAttributeTag = diceRoller.rollForAttribute(attackerProbability);
-    final defenderAttributeTag = diceRoller.rollForAttribute(defenderProbability);
+    final attackerAttributeTag = diceRoller.roll(attackerProbability);
+    final defenderAttributeTag = diceRoller.roll(defenderProbability);
     final damage = damageCalculator.calculateDamage(
         attacker.getAttributeByTag(attackerAttributeTag), defender.getAttributeByTag(defenderAttributeTag));
     giveDamageToCorrectFighter(type, damage);
