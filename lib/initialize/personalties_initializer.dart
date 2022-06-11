@@ -12,10 +12,9 @@ class PersonaltiesInitializer extends Initializer {
     final getIt = GetIt.instance;
     //TODO
     final personalties = <Personalty>[
-      Personalty("1", "Siłka", InGameLevel(level: 1, experience: 0, experienceStrategy: 100), 3, AttributeTag.rock),
-      Personalty("1", "Cenzo", InGameLevel(level: 1, experience: 0, experienceStrategy: 100), 3, AttributeTag.knowledge),
+      Personalty("silkaKey", "Siłka", InGameLevel(level: 1, experience: 0, experienceStrategy: 100), 6, AttributeTag.rock),
+      Personalty("cenzoKey", "Cenzo", InGameLevel(level: 1, experience: 0, experienceStrategy: 100), 6, AttributeTag.knowledge),
     ];
     getIt.registerSingleton<PersonaltiesService>(PersonaltiesServiceImpl(personalties));
   }
-
 }

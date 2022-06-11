@@ -1,13 +1,13 @@
 import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/character_base/character/character.dart';
-import 'package:alpaka_clicker/flows/fight/data/calculators/probability.dart';
+import 'package:alpaka_clicker/base/randomizer/probability.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class ProbabilityCalculator {
+class AttributeProbabilityCalculator {
   final int baseProbability = 25;
 
-  Probability calculateProbability(Character character) {
+  Probability<AttributeTag> calculateProbability(Character character) {
     final rockProb = baseProbability + getGradeFactor(character.rockGrade);
     final paperProb = baseProbability + getGradeFactor(character.paperGrade) + rockProb;
     final scissorsProb = baseProbability + getGradeFactor(character.scissorsGrade) + paperProb;
@@ -21,7 +21,7 @@ class ProbabilityCalculator {
     };
 
     final probSum = knowledgeProb;
-    return Probability(probSum, attributesProb);
+    return Probability<AttributeTag>(probSum, attributesProb);
   }
 
   int getGradeFactor(Grade grade) {
