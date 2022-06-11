@@ -19,7 +19,7 @@ void main() {
   ];
 
   final diceRoller = MockDiceRoller(dummyReturn: <T>(prob) => prob.attributesProp.values.first);
-  final rangeCalculator = MockAttributeRangeCalculator();
+  final rangeCalculator = MockAttributeLevelRangeProbabilityCalculator();
   final gradeCalculator = MockGradeProbabilityCalculator();
 
   const returnedLevel = 1;

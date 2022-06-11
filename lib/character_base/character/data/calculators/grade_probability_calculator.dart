@@ -23,21 +23,21 @@ class GradeProbabilityCalculator {
       bGrade: Grade.b,
       aGrade: Grade.a,
       sGrade: Grade.s,
-    };
+    }..removeWhere((key, value) => key == 0);
     return Probability(sGrade, gradesProbability);
   }
 
-  int gradeSCalc(int x) => (-0.0011 * pow(x - 150, 2) + 25).ceil();
+  int gradeSCalc(int x) => max((-0.0011 * pow(x - 150, 2) + 25).ceil(), 1);
 
-  int gradeACalc(int x) => (-0.0014 * pow(x - 125, 2) + 25).ceil();
+  int gradeACalc(int x) => max((-0.0014 * pow(x - 125, 2) + 25).ceil(), 0);
 
-  int gradeBCalc(int x) => (-0.002 * pow(x - 100, 2) + 25).ceil();
+  int gradeBCalc(int x) => max((-0.002 * pow(x - 100, 2) + 25).ceil(), 0);
 
-  int gradeCCalc(int x) => (-0.003 * pow(x - 75, 2) + 25).ceil();
+  int gradeCCalc(int x) => max((-0.003 * pow(x - 75, 2) + 25).ceil(), 0);
 
-  int gradeDCalc(int x) => (-0.004 * pow(x - 50, 2) + 25).ceil();
+  int gradeDCalc(int x) => max((-0.004 * pow(x - 50, 2) + 25).ceil(), 0);
 
-  int gradeECalc(int x) => (-0.005 * pow(x - 25, 2) + 25).ceil();
+  int gradeECalc(int x) => max((-0.005 * pow(x - 25, 2) + 25).ceil(), 0);
 
-  int gradeFCalc(int x) => (-0.02 * pow(x - 1, 2) + 25).ceil();
+  int gradeFCalc(int x) => max((-0.02 * pow(x - 1, 2) + 25).ceil(), 0);
 }

@@ -1,7 +1,11 @@
 import 'dart:math';
 
+import 'package:alpaka_clicker/character_base/character/data/calculators/enemy_level_probability_calculator.dart';
+import 'package:alpaka_clicker/character_base/character/data/calculators/enemy_main_attribute_probability_calculator.dart';
+import 'package:alpaka_clicker/character_base/character/data/calculators/enemy_personalty_level_probability_calculator.dart';
 import 'package:alpaka_clicker/character_base/character/data/calculators/grade_probability_calculator.dart';
-import 'package:alpaka_clicker/character_base/character/data/calculators/range_probability_calculator.dart';
+import 'package:alpaka_clicker/character_base/character/data/calculators/attribute_level_range_probability_calculator.dart';
+import 'package:alpaka_clicker/character_base/character/data/enemy_generator.dart';
 import 'package:alpaka_clicker/character_base/character/data/player_generator.dart';
 import 'package:alpaka_clicker/character_base/character/domain/character_service.dart';
 import 'package:alpaka_clicker/character_base/personalty/domain/personalties_service.dart';
@@ -50,7 +54,11 @@ import 'package:mockito/annotations.dart';
   CharacterService,
   CharacterToCharacterInfoMapper,
   ToPersonaltyModelMapper,
-  RangeProbabilityCalculator,
+  AttributeLevelRangeProbabilityCalculator,
   GradeProbabilityCalculator,
+  EnemyGenerator,
+  EnemyLevelProbabilityCalculator,
+  EnemyMainAttributeProbabilityCalculator,
+  EnemyPersonaltyLevelProbabilityCalculator
 ])
 void main() {}

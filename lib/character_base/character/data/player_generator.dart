@@ -1,7 +1,7 @@
 import 'package:alpaka_clicker/base/randomizer/dice_roller.dart';
 import 'package:alpaka_clicker/character_base/character/character.dart';
-import 'package:alpaka_clicker/character_base/character/data/calculators/range_probability_calculator.dart';
 import 'package:alpaka_clicker/character_base/character/data/calculators/grade_probability_calculator.dart';
+import 'package:alpaka_clicker/character_base/character/data/calculators/attribute_level_range_probability_calculator.dart';
 import 'package:alpaka_clicker/character_base/character/data/character_generator.dart';
 import 'package:alpaka_clicker/character_base/character/models/attributes.dart';
 import 'package:alpaka_clicker/character_base/character/models/in_game_level.dart';
@@ -10,8 +10,10 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class PlayerGenerator extends CharacterGenerator {
-  PlayerGenerator(RangeProbabilityCalculator rangeCalculator, GradeProbabilityCalculator gradeProbabilityCalculator, DiceRoller diceRoller)
-      : super(rangeCalculator, gradeProbabilityCalculator, diceRoller);
+  final AttributeLevelRangeProbabilityCalculator rangeCalculator;
+
+  PlayerGenerator(this.rangeCalculator, GradeProbabilityCalculator gradeProbabilityCalculator, DiceRoller diceRoller)
+      : super(gradeProbabilityCalculator, diceRoller);
 
   Character generatePlayer(String name, List<Personalty> personalties) {
     Rock rock = generateAttribute(personalties.firstWhere((element) => element.attributeTag == AttributeTag.rock)) as Rock;
@@ -23,5 +25,13 @@ class PlayerGenerator extends CharacterGenerator {
     final characterLevel = InGameLevel(level: level, experience: 0, experienceStrategy: 1000);
 
     return Character(name, characterLevel, rock, paper, scissors, knowledge);
+  }
+
+  Attribute generateAttribute(Personalty personalty) {
+    final attributeLevelProbability = rangeCalculator.calculateRange(personalty.level);
+    final attributeLevel = diceRoller.roll(attributeLevelProbability);
+    final grade = generateGrade(personalty.attributeTag, attributeLevel);
+
+    return createCorrectAttribute(personalty.attributeTag, attributeLevel, grade);
   }
 }
