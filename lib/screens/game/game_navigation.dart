@@ -1,6 +1,6 @@
-import 'package:alpaka_clicker/flows/character_details/screens/character_details_screen.dart';
-import 'package:alpaka_clicker/flows/fight/screens/fight_screen.dart';
-import 'package:alpaka_clicker/flows/property_shop/screens/property_shop_screen.dart';
+import 'package:alpaka_clicker/flows/character_details/screen/character_details_screen.dart';
+import 'package:alpaka_clicker/flows/fight_creator/screen/fight_creator_screen.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/property_shop_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -16,7 +16,7 @@ class GameNavigation {
   }
 
   void goToFight(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => FightScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => FightCreatorScreen()));
   }
 
   void goToPropertyShop(BuildContext context) {

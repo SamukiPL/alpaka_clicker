@@ -39,7 +39,7 @@ abstract class _CharacterDetailsControllerBase with Store {
 
   @action
   Future<void> initialize() async {
-    _getCharacterInfo();
+    await _getCharacterInfo();
     _offersSubscription = _getPersonaltiesUseCase().listen((event) {
       event.onSuccess((value) => _setPersonalties(value));
     });

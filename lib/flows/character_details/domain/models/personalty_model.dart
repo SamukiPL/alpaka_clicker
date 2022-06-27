@@ -7,7 +7,7 @@ class PersonaltyModel {
   final int currentLevel;
   final AttributeTag attributeTag;
   final Grade attributeGrade;
-  final Pair<int, int> attributeRange;
+  final Range attributeRange;
   final String displayablePrice;
   final PersonaltyOffer offer;
   final bool canBuy;

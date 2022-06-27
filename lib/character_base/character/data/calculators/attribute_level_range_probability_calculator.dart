@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class AttributeLevelRangeProbabilityCalculator {
-  final Pair<int, int> startingRange;
+  final Range startingRange;
 
-  AttributeLevelRangeProbabilityCalculator(this.startingRange);
+  AttributeLevelRangeProbabilityCalculator(@Named("levelRange") this.startingRange);
 
   Probability<int> calculateRange(int level) {
     final rangeProbability = <int, int>{};

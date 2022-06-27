@@ -1,8 +1,8 @@
 import 'package:alpaka_clicker/base/base_times.dart';
-import 'package:alpaka_clicker/flows/character_details/screens/character_details_controller.dart';
-import 'package:alpaka_clicker/flows/character_details/screens/character_info/character_info_widget.dart';
-import 'package:alpaka_clicker/flows/character_details/screens/character_info/quick_attributes_widget.dart';
-import 'package:alpaka_clicker/flows/character_details/screens/list/personalty_view_holder.dart';
+import 'package:alpaka_clicker/flows/character_details/screen/character_details_controller.dart';
+import 'package:alpaka_clicker/flows/character_details/screen/character_info/character_info_widget.dart';
+import 'package:alpaka_clicker/flows/character_details/screen/character_info/quick_attributes_widget.dart';
+import 'package:alpaka_clicker/flows/character_details/screen/list/personalty_view_holder.dart';
 import 'package:alpaka_clicker/util/widgets/disposable_widget.dart';
 import 'package:alpaka_clicker/util/widgets/loading_widget.dart';
 import 'package:alpaka_clicker/util/widgets/money_counters/money_counter_toolbar.dart';
