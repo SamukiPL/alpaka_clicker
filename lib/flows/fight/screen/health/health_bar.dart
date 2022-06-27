@@ -1,5 +1,5 @@
 import 'package:alpaka_clicker/flows/fight/domain/models/health_model.dart';
-import 'package:alpaka_clicker/flows/fight/screens/health/health_widget.dart';
+import 'package:alpaka_clicker/flows/fight/screen/health/health_widget.dart';
 import 'package:flutter/material.dart';
 
 class HealthBar extends StatelessWidget {

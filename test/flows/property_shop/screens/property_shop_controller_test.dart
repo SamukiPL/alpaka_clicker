@@ -1,6 +1,6 @@
 import 'package:alpaka_clicker/clicker_base/buying/domain/buying_state.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
-import 'package:alpaka_clicker/flows/property_shop/screens/property_shop_controller.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/property_shop_controller.dart';
 import 'package:alpaka_clicker/util/monad/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' as mobx;

@@ -28,7 +28,7 @@ void main() {
 
     for (int level = 10; level < 100; level += 25) {
       final range = Pair(level, level);
-      final settings = DifficultySettings(range);
+      final settings = DifficultySettings(range, -1);
       final enemy = underTest.generateEnemy(settings);
       expect(enemy.level, level);
       expect(enemy.rockLevel + enemy.paperLevel + enemy.scissorsLevel + enemy.knowledgeLevel, level);

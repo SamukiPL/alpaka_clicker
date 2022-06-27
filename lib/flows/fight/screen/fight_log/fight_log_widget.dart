@@ -1,5 +1,5 @@
 import 'package:alpaka_clicker/flows/fight/domain/models/log_model.dart';
-import 'package:alpaka_clicker/flows/fight/screens/fight_log/log_item_widget.dart';
+import 'package:alpaka_clicker/flows/fight/screen/fight_log/log_item_widget.dart';
 import 'package:flutter/widgets.dart';
 
 class FightLogWidget extends StatelessWidget {

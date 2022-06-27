@@ -37,7 +37,7 @@ class EnemyGenerator extends CharacterGenerator {
     return Character("ENEMY TODO", enemyInGameLevel, rock, paper, scissors, knowledge);
   }
 
-  int generateCharacterLevel(Pair<int, int> range) {
+  int generateCharacterLevel(Range range) {
     final probability = levelProbabilityCalculator.calculateRange(range);
     return diceRoller.roll(probability);
   }

@@ -1,6 +1,6 @@
-import 'package:alpaka_clicker/flows/property_shop/screens/buy_control/buy_controls_widget.dart';
-import 'package:alpaka_clicker/flows/property_shop/screens/list/property_view_holder.dart';
-import 'package:alpaka_clicker/flows/property_shop/screens/property_shop_controller.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/buy_control/buy_controls_widget.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/list/property_view_holder.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/property_shop_controller.dart';
 import 'package:alpaka_clicker/theme/decorations.dart';
 import 'package:alpaka_clicker/theme/text_styles.dart';
 import 'package:alpaka_clicker/util/widgets/disposable_widget.dart';

@@ -8,17 +8,20 @@ class ClickerButton extends StatelessWidget {
 
   final EdgeInsetsGeometry padding;
 
+  final Color color;
+
   const ClickerButton({
     Key? key,
     required this.child,
     required this.onTap,
     this.padding = const EdgeInsets.all(8),
+    this.color = Colors.white
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-        color: Colors.white,
+        color: color,
         borderRadius: defaultRadius(),
         child: InkWell(
             onTap: () => onTap(),

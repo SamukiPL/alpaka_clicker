@@ -16,7 +16,7 @@ class RoundedProgressWidget extends StatelessWidget {
       required this.displayableValue,
       this.height = 20,
       this.decoration,
-      this.color = Colors.amber,
+      this.color = BaseColors.primary,
       this.backgroundColor = Colors.white,
       this.textStyle = const TextStyle(color: Colors.white, fontSize: 100)})
       : super(key: key);

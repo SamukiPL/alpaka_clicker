@@ -1,7 +1,7 @@
 import 'package:alpaka_clicker/base/base_colors.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/buy_amount.dart';
-import 'package:alpaka_clicker/flows/property_shop/screens/buy_control/buy_controls_controller.dart';
-import 'package:alpaka_clicker/flows/property_shop/screens/buy_control/buy_controls_ext.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/buy_control/buy_controls_controller.dart';
+import 'package:alpaka_clicker/flows/property_shop/screen/buy_control/buy_controls_ext.dart';
 import 'package:alpaka_clicker/theme/decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

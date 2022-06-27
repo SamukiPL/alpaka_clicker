@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class EnemyLevelProbabilityCalculator {
-  Probability<int> calculateRange(Pair<int, int> range) {
+  Probability<int> calculateRange(Range range) {
     final rangeProbability = <int, int>{};
     for (int i = 0; i <= range.last - range.first; i ++) {
       final key = i + 1;

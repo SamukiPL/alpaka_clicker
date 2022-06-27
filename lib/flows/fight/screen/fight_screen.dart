@@ -1,9 +1,10 @@
 import 'package:alpaka_clicker/base/base_colors.dart';
 import 'package:alpaka_clicker/flows/fight/domain/models/log_model.dart';
-import 'package:alpaka_clicker/flows/fight/screens/fight_game.dart';
-import 'package:alpaka_clicker/flows/fight/screens/fight_log/fight_log_widget.dart';
-import 'package:alpaka_clicker/flows/fight/screens/fight_screen_controller.dart';
-import 'package:alpaka_clicker/flows/fight/screens/health/health_bar.dart';
+import 'package:alpaka_clicker/flows/fight/screen/fight_game.dart';
+import 'package:alpaka_clicker/flows/fight/screen/fight_log/fight_log_widget.dart';
+import 'package:alpaka_clicker/flows/fight/screen/fight_screen_controller.dart';
+import 'package:alpaka_clicker/flows/fight/screen/health/health_bar.dart';
+import 'package:alpaka_clicker/flows/fight_creator/domain/difficulty_model.dart';
 import 'package:alpaka_clicker/util/widgets/disposable_widget.dart';
 import 'package:alpaka_clicker/util/widgets/money_counters/money_counter_toolbar.dart';
 import 'package:flame/game.dart';
@@ -15,8 +16,9 @@ import 'package:mobx/mobx.dart';
 
 class FightScreen extends StatelessWidget {
   final FightScreenController _controller = GetIt.instance.get<FightScreenController>();
+  final DifficultyModel difficultyModel;
 
-  FightScreen({Key? key}) : super(key: key);
+  FightScreen({Key? key, required this.difficultyModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,9 @@ class FightScreen extends StatelessWidget {
       listKey.currentState?.insertItem(0);
     });
     return DisposableWidget(
+      initialize: () {
+        _controller.initialize(difficultyModel);
+      },
       dispose: () {
         disposer.reaction.dispose();
         _controller.dispose();

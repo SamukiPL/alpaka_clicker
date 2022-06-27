@@ -1,5 +1,5 @@
 import 'package:alpaka_clicker/flows/character_details/domain/models/personalty_model.dart';
-import 'package:alpaka_clicker/flows/character_details/screens/list/grade_evaluation_widget.dart';
+import 'package:alpaka_clicker/flows/character_details/screen/list/grade_evaluation_widget.dart';
 import 'package:alpaka_clicker/theme/decorations.dart';
 import 'package:alpaka_clicker/theme/text_styles.dart';
 import 'package:alpaka_clicker/util/ext/attribute_ext.dart';
