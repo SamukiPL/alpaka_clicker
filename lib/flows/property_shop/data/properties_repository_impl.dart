@@ -12,7 +12,7 @@ import 'package:alpaka_clicker/util/pair.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@Singleton(as: PropertiesRepository)
+@LazySingleton(as: PropertiesRepository)
 class PropertiesRepositoryImpl implements PropertiesRepository {
   final MoneyService _moneyService;
   final PropertiesService _propertiesService;

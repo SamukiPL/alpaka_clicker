@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:alpaka_clicker/clicker_base/buying/domain/buy_property_use_case.dart';
 import 'package:alpaka_clicker/clicker_base/money/domain/get_displayable_interest_per_second_use_case.dart';
 import 'package:alpaka_clicker/clicker_base/property/models/property_offer.dart';
+import 'package:alpaka_clicker/flows/property_shop/data/properties_repository_impl.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/get_offers_use_case.dart';
 import 'package:alpaka_clicker/flows/property_shop/domain/models/property_model.dart';
+import 'package:alpaka_clicker/flows/property_shop/domain/properties_repository.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -46,5 +49,7 @@ abstract class _PropertyShopControllerBase with Store {
 
   Future<void> dispose() async {
     _offersSubscription.cancel();
+    final test = GetIt.instance.get<PropertiesRepository>();
+    GetIt.instance.resetLazySingleton<PropertiesRepository>(instance: test);
   }
 }
